@@ -3,21 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Italian Master v8.2</title>
+    <title>Italian Master v8.3</title>
     <style>
         body { font-family: -apple-system, sans-serif; background: #f0f2f5; display: flex; justify-content: center; padding: 5px; margin: 0; }
-        .card { background: white; padding: 10px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); text-align: center; width: 100%; max-width: 450px; margin-top: 5px; }
-        h1 { margin: 2px 0; font-size: 1.8rem; }
-        #pLabel { color: #666; font-size: 0.85rem; margin: 0; }
-        #mLabel { color: #2e7d32; font-weight: bold; font-size: 1rem; font-style: italic; margin-bottom: 2px; }
+        .card { background: white; padding: 10px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); text-align: center; width: 100%; max-width: 450px; }
+        
+        /* THE COMPACT ZONE */
+        #drillBox { display: flex; flex-direction: column; align-items: center; }
+        #pLabel { color: #666; font-size: 0.8rem; margin: 0; padding: 0; }
+        h1 { margin: -2px 0; font-size: 1.6rem; line-height: 1; }
+        #mLabel { color: #2e7d32; font-weight: bold; font-size: 0.95rem; font-style: italic; margin: 0; padding: 0; }
+        
+        /* Input & Buttons */
         .btn-main { width: 100%; padding: 10px; background: #2e7d32; color: white; border: none; border-radius: 8px; font-size: 1.1rem; cursor: pointer; font-weight: bold; margin-top: 5px; }
-        input { width: 85%; padding: 8px; margin: 4px 0; border: 2px solid #ddd; border-radius: 8px; font-size: 1.2rem; text-align: center; outline: none; -webkit-appearance: none; }
-        .feedback { margin-top: 2px; font-weight: bold; min-height: 35px; line-height: 1.1; font-size: 0.9rem; }
+        input { width: 85%; padding: 8px; margin: 2px 0; border: 2px solid #ddd; border-radius: 8px; font-size: 1.2rem; text-align: center; outline: none; -webkit-appearance: none; }
+        
+        .feedback { font-weight: bold; min-height: 30px; line-height: 1; font-size: 0.85rem; margin: 2px 0; }
         .hidden { display: none !important; }
+        
         .tab-btn { padding: 6px 10px; cursor: pointer; border: none; background: #ccc; border-radius: 6px; margin: 0 2px; font-weight: bold; font-size: 0.8rem; }
         .active-tab { background: #2e7d32; color: white; }
-        .accent-bar { display: flex; justify-content: center; gap: 3px; flex-wrap: wrap; margin-bottom: 5px; }
+        
+        .accent-bar { display: flex; justify-content: center; gap: 3px; margin-bottom: 5px; }
         .accent-btn { padding: 6px; border: 1px solid #ccc; border-radius: 4px; background: white; cursor: pointer; font-size: 1rem; min-width: 35px; }
+        
         .ref-container { overflow-x: auto; margin-top: 5px; max-height: 250px; }
         table { width: 100%; border-collapse: collapse; font-size: 0.7rem; text-align: left; }
         td, th { padding: 4px; border-bottom: 1px solid #eee; }
@@ -26,13 +35,13 @@
 <body>
 
 <div class="card">
-    <div style="margin-bottom: 8px;">
+    <div style="margin-bottom: 5px;">
         <button id="t1" class="tab-btn active-tab" onclick="showDrill()">Drill</button>
         <button id="t2" class="tab-btn" onclick="showRef()">List</button>
     </div>
 
     <div id="drillBox">
-        <select id="tenseSelect" onchange="resetTask()" style="width:100%; padding:6px; margin-bottom:5px; font-size: 0.85rem; border-radius: 6px;">
+        <select id="tenseSelect" onchange="resetTask()" style="width:100%; padding:5px; margin-bottom:5px; font-size: 0.8rem; border-radius: 6px;">
             <option value="presente">Presente</option>
             <option value="passato_prossimo">Passato Prossimo</option>
             <option value="imperfetto">Imperfetto</option>
@@ -57,11 +66,11 @@
         </div>
 
         <button class="btn-main" id="mainBtn" onclick="doAction()">Verifica</button>
-        <button onclick="resetTask()" style="background: none; border: none; color: #999; margin-top: 5px; text-decoration: underline; font-size: 0.75rem;">Skip</button>
+        <button onclick="resetTask()" style="background: none; border: none; color: #999; margin-top: 4px; text-decoration: underline; font-size: 0.7rem;">Skip</button>
     </div>
 
-    <div id="refBox" class="hidden" style="display:none;">
-        <select id="vSelect" onchange="updateTable()" style="width:100%; padding:6px; border-radius: 6px; font-size: 0.85rem;"></select>
+    <div id="refBox" style="display:none;">
+        <select id="vSelect" onchange="updateTable()" style="width:100%; padding:5px; border-radius: 6px; font-size: 0.8rem;"></select>
         <div class="ref-container">
             <table>
                 <thead><tr style="background:#eee;"><th>Sogg.</th><th>Pres</th><th>Pass.Pro</th><th>Imp</th><th>Fut</th><th>Cond</th></tr></thead>
@@ -81,7 +90,9 @@
         {inf: "Svegliarsi", stem: "svegli", p_part: "svegliato", eng: "wake up", eng_p: "woke up", group: "are", type: "refl"},
         {inf: "Cercare", stem: "cerc", p_part: "cercato", eng: "look for", eng_p: "looked for", group: "are", type: "reg_h"},
         {inf: "Pagare", stem: "pag", p_part: "pagato", eng: "pay", eng_p: "paid", group: "are", type: "reg_h"},
+        {inf: "Spiegare", stem: "spieg", p_part: "spiegato", eng: "explain", eng_p: "explained", group: "are", type: "reg_h"},
         {inf: "Mangiare", stem: "mangi", p_part: "mangiato", eng: "eat", eng_p: "ate", group: "are", type: "reg"},
+        {inf: "Viaggiare", stem: "viaggi", p_part: "viaggiato", eng: "travel", eng_p: "traveled", group: "are", type: "reg"},
         {inf: "Bere", eng: "drink", eng_p: "drank", group: "ir", type: "ir",
             presente: ["bevo", "bevi", "beve", "beviamo", "bevete", "bevono"],
             passato_prossimo: ["ho bevuto", "hai bevuto", "ha bevuto", "abbiamo bevuto", "avete bevuto", "hanno bevuto"],
@@ -105,7 +116,25 @@
             passato_prossimo: ["ho avuto", "hai avuto", "ha avuto", "abbiamo avuto", "avete avuto", "hanno avuto"],
             imperfetto: ["avevo", "avevi", "aveva", "avevamo", "avevate", "avevano"],
             futuro: ["avrò", "avrai", "avrà", "avremo", "avrete", "avranno"],
-            condizionale: ["avrei", "avresti", "avrebbe", "avremmo", "avreste", "avrebbero"]}
+            condizionale: ["avrei", "avresti", "avrebbe", "avremmo", "avreste", "avrebbero"]},
+        {inf: "Fare", eng: "do", eng_p: "did", group: "ir", type: "ir", 
+            presente: ["faccio", "fai", "fa", "facciamo", "fate", "fanno"],
+            passato_prossimo: ["ho fatto", "hai fatto", "ha fatto", "abbiamo fatto", "avete fatto", "hanno fatto"],
+            imperfetto: ["facevo", "facevi", "faceva", "facevamo", "facevate", "facevano"],
+            futuro: ["farò", "farai", "farà", "faremo", "farete", "faranno"],
+            condizionale: ["farei", "faresti", "farebbe", "faremmo", "fareste", "farebbero"]},
+        {inf: "Volere", eng: "want", eng_p: "wanted", group: "ir", type: "ir",
+            presente: ["voglio", "vuoi", "vuole", "vogliamo", "volete", "vogliono"],
+            passato_prossimo: ["ho voluto", "hai voluto", "ha voluto", "abbiamo voluto", "avete voluto", "hanno voluto"],
+            imperfetto: ["volevo", "volevi", "voleva", "volevamo", "volevate", "volevano"],
+            futuro: ["vorrò", "vorrai", "vorrà", "vorremo", "vorrete", "vorranno"],
+            condizionale: ["vorrei", "vorresti", "vorrebbe", "vorremmo", "vorreste", "vorrebbero"]},
+        {inf: "Dovere", eng: "must", eng_p: "had to", group: "ir", type: "ir",
+            presente: ["devo", "devi", "deve", "dobbiamo", "dovete", "devono"],
+            passato_prossimo: ["ho dovuto", "hai dovuto", "ha dovuto", "abbiamo dovuto", "avete dovuto", "hanno dovuto"],
+            imperfetto: ["dovevo", "dovevi", "doveva", "dovevamo", "dovevate", "dovevano"],
+            futuro: ["dovrò", "dovrai", "dovrà", "dovremo", "dovrete", "dovranno"],
+            condizionale: ["dovrei", "dovresti", "dovrebbe", "dovremmo", "dovreste", "dovrebbero"]}
     ];
 
     var aux_avere = ["ho", "hai", "ha", "abbiamo", "avete", "hanno"];
@@ -134,17 +163,13 @@
     function getConj(v, pi, tn) {
         if (v.type === "ir") return v[tn][pi];
         if (tn === 'passato_prossimo') {
-            var res = aux_avere[pi] + " " + v.p_part;
+            var res = aux_avere[pi] + " " + (v.p_part || "");
             return (v.type === "refl") ? pro[pi].r + " " + res : res;
         }
         var s = v.stem;
         var gt = (tn === 'presente' && v.type === 'isc') ? 'isc' : v.group;
         var suffix = suf[tn][gt][pi];
-        var needsH = false;
-        if (v.type === "reg_h") {
-            if (tn === 'presente' && (pi === 1 || pi === 3)) needsH = true;
-            if (tn === 'futuro' || tn === 'condizionale') needsH = true;
-        }
+        var needsH = (v.type === "reg_h" && ((tn === 'presente' && (pi === 1 || pi === 3)) || tn === 'futuro' || tn === 'condizionale'));
         if (s.charAt(s.length - 1) === 'i' && suffix.charAt(0) === 'i') s = s.substring(0, s.length - 1);
         if (needsH) s += "h";
         var word = s + suffix;
@@ -162,7 +187,7 @@
         var p = pro[pi].en;
         var hint = p + " ";
         if (tn === 'presente') hint += v.eng + (p === "He/She" ? "s" : "");
-        else if (tn === 'passato_prossimo') hint += v.eng_p;
+        else if (tn === 'passato_prossimo') hint += (v.eng_p || "");
         else if (tn === 'imperfetto') hint += "used to " + v.eng;
         else if (tn === 'futuro') hint += "will " + v.eng;
         else hint += "would " + v.eng;
@@ -178,13 +203,13 @@
         if (wait) { resetTask(); return; }
         var inp = document.getElementById('userInput').value.toLowerCase().replace(/^\s+|\s+$/g, '');
         if (inp === task.ans) {
-            document.getElementById('feedback').innerHTML = "<span style='color:green'>Ottimo! ✅</span>";
+            document.getElementById('feedback').innerHTML = "<span style='color:green'>Ottimo!</span>";
             setTimeout(resetTask, 800);
         } else {
-            document.getElementById('feedback').innerHTML = "No. Risposta: <b style='color:#d32f2f'>" + task.ans + "</b>";
+            document.getElementById('feedback').innerHTML = "No: <b style='color:#d32f2f'>" + task.ans + "</b>";
             document.getElementById('userInput').disabled = true;
             document.getElementById('userInput').style.background = "#ffd6d6";
-            document.getElementById('mainBtn').innerText = "Avanti →";
+            document.getElementById('mainBtn').innerText = "Next";
             wait = true;
         }
     }
@@ -224,7 +249,6 @@
         if(!wait) { el.value += c; el.focus(); }
     }
 
-    // Startup
     var vs = document.getElementById('vSelect');
     for(var i=0; i<verbs.length; i++) {
         var o = document.createElement('option');
