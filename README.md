@@ -3,45 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Italian Master v8.3</title>
+    <title>Italian Master v8.4</title>
     <style>
-        body { font-family: -apple-system, sans-serif; background: #f0f2f5; display: flex; justify-content: center; padding: 5px; margin: 0; }
-        .card { background: white; padding: 10px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); text-align: center; width: 100%; max-width: 450px; }
+        /* Fill the screen but keep content tight */
+        body { font-family: -apple-system, sans-serif; background: #f0f2f5; display: flex; justify-content: center; padding: 0; margin: 0; overflow: hidden; }
+        .card { background: white; padding: 15px; border-radius: 0 0 15px 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); text-align: center; width: 100%; max-width: 500px; margin-bottom: 0; }
         
-        /* THE COMPACT ZONE */
-        #drillBox { display: flex; flex-direction: column; align-items: center; }
-        #pLabel { color: #666; font-size: 0.8rem; margin: 0; padding: 0; }
-        h1 { margin: -2px 0; font-size: 1.6rem; line-height: 1; }
-        #mLabel { color: #2e7d32; font-weight: bold; font-size: 0.95rem; font-style: italic; margin: 0; padding: 0; }
+        /* Larger fonts for phone readability */
+        h1 { margin: 2px 0; font-size: 2.5rem; line-height: 1.1; color: #1a1a1a; }
+        #pLabel { color: #666; font-size: 1.1rem; margin: 0; }
+        #mLabel { color: #2e7d32; font-weight: bold; font-size: 1.3rem; font-style: italic; margin: 2px 0; }
         
-        /* Input & Buttons */
-        .btn-main { width: 100%; padding: 10px; background: #2e7d32; color: white; border: none; border-radius: 8px; font-size: 1.1rem; cursor: pointer; font-weight: bold; margin-top: 5px; }
-        input { width: 85%; padding: 8px; margin: 2px 0; border: 2px solid #ddd; border-radius: 8px; font-size: 1.2rem; text-align: center; outline: none; -webkit-appearance: none; }
+        /* Input & Buttons - Tighter vertical margins */
+        .btn-main { width: 100%; padding: 18px; background: #2e7d32; color: white; border: none; border-radius: 12px; font-size: 1.3rem; cursor: pointer; font-weight: bold; margin-top: 8px; }
+        input { width: 90%; padding: 15px; margin: 5px 0; border: 3px solid #ddd; border-radius: 12px; font-size: 1.5rem; text-align: center; outline: none; -webkit-appearance: none; }
         
-        .feedback { font-weight: bold; min-height: 30px; line-height: 1; font-size: 0.85rem; margin: 2px 0; }
+        .feedback { font-weight: bold; min-height: 35px; line-height: 1.2; font-size: 1.1rem; margin: 4px 0; }
         .hidden { display: none !important; }
         
-        .tab-btn { padding: 6px 10px; cursor: pointer; border: none; background: #ccc; border-radius: 6px; margin: 0 2px; font-weight: bold; font-size: 0.8rem; }
+        .tab-btn { padding: 10px 18px; cursor: pointer; border: none; background: #ccc; border-radius: 8px; margin: 0 5px; font-weight: bold; font-size: 1rem; }
         .active-tab { background: #2e7d32; color: white; }
         
-        .accent-bar { display: flex; justify-content: center; gap: 3px; margin-bottom: 5px; }
-        .accent-btn { padding: 6px; border: 1px solid #ccc; border-radius: 4px; background: white; cursor: pointer; font-size: 1rem; min-width: 35px; }
+        .accent-bar { display: flex; justify-content: center; gap: 6px; margin-bottom: 8px; }
+        .accent-btn { padding: 12px; border: 1px solid #ccc; border-radius: 8px; background: white; cursor: pointer; font-size: 1.3rem; min-width: 48px; }
         
-        .ref-container { overflow-x: auto; margin-top: 5px; max-height: 250px; }
-        table { width: 100%; border-collapse: collapse; font-size: 0.7rem; text-align: left; }
-        td, th { padding: 4px; border-bottom: 1px solid #eee; }
+        /* Remove bottom space so keyboard doesn't shove the card too high */
+        #drillBox { margin-bottom: 0; padding-bottom: 0; }
     </style>
 </head>
 <body>
 
 <div class="card">
-    <div style="margin-bottom: 5px;">
+    <div style="margin-bottom: 10px;">
         <button id="t1" class="tab-btn active-tab" onclick="showDrill()">Drill</button>
         <button id="t2" class="tab-btn" onclick="showRef()">List</button>
     </div>
 
     <div id="drillBox">
-        <select id="tenseSelect" onchange="resetTask()" style="width:100%; padding:5px; margin-bottom:5px; font-size: 0.8rem; border-radius: 6px;">
+        <select id="tenseSelect" onchange="resetTask()" style="width:100%; padding:10px; margin-bottom:8px; font-size: 1rem; border-radius: 8px;">
             <option value="presente">Presente</option>
             <option value="passato_prossimo">Passato Prossimo</option>
             <option value="imperfetto">Imperfetto</option>
@@ -49,12 +48,12 @@
             <option value="condizionale">Condizionale</option>
         </select>
         
-        <div id="pLabel">Pronto...</div>
+        <div id="pLabel">Caricamento...</div>
         <h1 id="vLabel">---</h1>
         <div id="mLabel">---</div>
 
         <div id="feedback" class="feedback"></div>
-        <input type="text" id="userInput" autocomplete="off" autocapitalize="none" placeholder="Scrivi qui...">
+        <input type="text" id="userInput" autocomplete="off" autocapitalize="none" placeholder="Scrivi qui..." autofocus>
         
         <div class="accent-bar">
             <button class="accent-btn" onclick="addAcc('à')">à</button>
@@ -66,13 +65,13 @@
         </div>
 
         <button class="btn-main" id="mainBtn" onclick="doAction()">Verifica</button>
-        <button onclick="resetTask()" style="background: none; border: none; color: #999; margin-top: 4px; text-decoration: underline; font-size: 0.7rem;">Skip</button>
+        <button onclick="resetTask()" style="background: none; border: none; color: #999; margin-top: 8px; text-decoration: underline; font-size: 0.9rem;">Skip</button>
     </div>
 
     <div id="refBox" style="display:none;">
-        <select id="vSelect" onchange="updateTable()" style="width:100%; padding:5px; border-radius: 6px; font-size: 0.8rem;"></select>
-        <div class="ref-container">
-            <table>
+        <select id="vSelect" onchange="updateTable()" style="width:100%; padding:10px; border-radius: 8px; font-size: 1rem;"></select>
+        <div style="overflow-x:auto; margin-top:10px;">
+            <table style="width:100%; border-collapse:collapse; font-size:0.8rem; text-align:left;">
                 <thead><tr style="background:#eee;"><th>Sogg.</th><th>Pres</th><th>Pass.Pro</th><th>Imp</th><th>Fut</th><th>Cond</th></tr></thead>
                 <tbody id="rt"></tbody>
             </table>
@@ -86,25 +85,16 @@
         {inf: "Vendere", stem: "vend", p_part: "venduto", eng: "sell", eng_p: "sold", group: "ere", type: "reg"},
         {inf: "Partire", stem: "part", p_part: "partito", eng: "leave", eng_p: "left", group: "ire", type: "reg"},
         {inf: "Capire", stem: "cap", p_part: "capito", eng: "understand", eng_p: "understood", group: "ire", type: "isc"},
-        {inf: "Finire", stem: "fin", p_part: "finito", eng: "finish", eng_p: "finished", group: "ire", type: "isc"},
         {inf: "Svegliarsi", stem: "svegli", p_part: "svegliato", eng: "wake up", eng_p: "woke up", group: "are", type: "refl"},
         {inf: "Cercare", stem: "cerc", p_part: "cercato", eng: "look for", eng_p: "looked for", group: "are", type: "reg_h"},
         {inf: "Pagare", stem: "pag", p_part: "pagato", eng: "pay", eng_p: "paid", group: "are", type: "reg_h"},
-        {inf: "Spiegare", stem: "spieg", p_part: "spiegato", eng: "explain", eng_p: "explained", group: "are", type: "reg_h"},
         {inf: "Mangiare", stem: "mangi", p_part: "mangiato", eng: "eat", eng_p: "ate", group: "are", type: "reg"},
-        {inf: "Viaggiare", stem: "viaggi", p_part: "viaggiato", eng: "travel", eng_p: "traveled", group: "are", type: "reg"},
         {inf: "Bere", eng: "drink", eng_p: "drank", group: "ir", type: "ir",
             presente: ["bevo", "bevi", "beve", "beviamo", "bevete", "bevono"],
             passato_prossimo: ["ho bevuto", "hai bevuto", "ha bevuto", "abbiamo bevuto", "avete bevuto", "hanno bevuto"],
             imperfetto: ["bevevo", "bevevi", "beveva", "bevevamo", "bevevate", "bevevano"],
             futuro: ["berrò", "berrai", "berrà", "berremo", "berrete", "berranno"],
             condizionale: ["berrei", "berresti", "berrebbe", "berremmo", "berreste", "berrebbero"]},
-        {inf: "Andare", eng: "go", eng_p: "went", group: "ir", type: "ir", 
-            presente: ["vado", "vai", "va", "andiamo", "andate", "vanno"],
-            passato_prossimo: ["sono andato", "sei andato", "è andato", "siamo andati", "siete andati", "sono andati"],
-            imperfetto: ["andavo", "andavi", "andava", "andavamo", "andavate", "andavano"],
-            futuro: ["andrò", "andrai", "andrà", "andremo", "andrete", "andranno"],
-            condizionale: ["andrei", "andresti", "andrebbe", "andremmo", "andreste", "andrebbero"]},
         {inf: "Essere", eng: "be", eng_p: "was", group: "ir", type: "ir", 
             presente: ["sono", "sei", "è", "siamo", "siete", "sono"],
             passato_prossimo: ["sono stato", "sei stato", "è stato", "siamo stati", "siete stati", "sono stati"],
@@ -197,20 +187,24 @@
         document.getElementById('userInput').style.background = "white";
         document.getElementById('feedback').innerText = "";
         document.getElementById('mainBtn').innerText = "Verifica";
+        
+        // FORCE FOCUS
+        document.getElementById('userInput').focus();
     }
 
     function doAction() {
         if (wait) { resetTask(); return; }
-        var inp = document.getElementById('userInput').value.toLowerCase().replace(/^\s+|\s+$/g, '');
+        var inp = document.getElementById('userInput').value.toLowerCase().trim();
         if (inp === task.ans) {
             document.getElementById('feedback').innerHTML = "<span style='color:green'>Ottimo!</span>";
-            setTimeout(resetTask, 800);
+            setTimeout(resetTask, 600);
         } else {
             document.getElementById('feedback').innerHTML = "No: <b style='color:#d32f2f'>" + task.ans + "</b>";
             document.getElementById('userInput').disabled = true;
             document.getElementById('userInput').style.background = "#ffd6d6";
             document.getElementById('mainBtn').innerText = "Next";
             wait = true;
+            document.getElementById('mainBtn').focus();
         }
     }
 
@@ -219,6 +213,7 @@
         document.getElementById('refBox').style.display = 'none';
         document.getElementById('t1').className = "tab-btn active-tab";
         document.getElementById('t2').className = "tab-btn";
+        document.getElementById('userInput').focus();
     }
 
     function showRef() {
@@ -246,9 +241,13 @@
 
     function addAcc(c) {
         var el = document.getElementById('userInput');
-        if(!wait) { el.value += c; el.focus(); }
+        if(!wait) { 
+            el.value += c; 
+            el.focus(); 
+        }
     }
 
+    // Startup
     var vs = document.getElementById('vSelect');
     for(var i=0; i<verbs.length; i++) {
         var o = document.createElement('option');
