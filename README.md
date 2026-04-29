@@ -3,24 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Italian Master v9.0</title>
+    <title>Italian Master v9.1</title>
     <style>
         html, body { height: 100%; margin: 0; padding: 0; background: #f0f2f5; overflow: hidden; }
         body { font-family: -apple-system, sans-serif; display: flex; flex-direction: column; align-items: center; }
-        .card { background: white; width: 100%; max-width: 600px; height: 100%; display: flex; flex-direction: column; padding: 2px 10px; box-sizing: border-box; }
+        
+        .card { 
+            background: white; 
+            width: 100%; 
+            max-width: 600px; 
+            height: 100%; 
+            display: flex;
+            flex-direction: column;
+            padding: 5px 10px; 
+            box-sizing: border-box;
+        }
 
-        /* THE COMPACT HEADER */
-        .header-box { display: flex; align-items: baseline; justify-content: center; gap: 8px; margin: 0; }
+        /* The Spacer pushes everything below it to the bottom */
+        .spacer { flex-grow: 1; }
+
+        .top-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
+        
+        /* Compact Header */
+        .header-box { display: flex; align-items: baseline; justify-content: center; gap: 8px; }
         #pLabel { color: #d32f2f; font-size: 1rem; font-weight: bold; text-transform: uppercase; }
         h1 { margin: 0; font-size: 2.2rem; line-height: 1; color: #1a1a1a; }
-        #mLabel { color: #2e7d32; font-weight: bold; font-size: 1rem; font-style: italic; margin: 0; }
+        #mLabel { color: #2e7d32; font-weight: bold; font-size: 1rem; font-style: italic; margin-top: 2px; }
+
+        /* Input & Accents Area - Locked together */
+        .interactive-zone { display: flex; flex-direction: column; gap: 2px; }
+        input { 
+            width: 100%; 
+            padding: 10px; 
+            border: 3px solid #ddd; 
+            border-radius: 10px; 
+            font-size: 1.5rem; 
+            text-align: center; 
+            outline: none; 
+            box-sizing: border-box;
+            -webkit-appearance: none;
+        }
+        .accent-bar { display: flex; justify-content: center; gap: 4px; }
+        .accent-btn { padding: 8px; border: 1px solid #ccc; border-radius: 8px; background: white; font-size: 1.2rem; min-width: 42px; }
+        .btn-main { width: 100%; padding: 14px; background: #2e7d32; color: white; border: none; border-radius: 10px; font-size: 1.3rem; font-weight: bold; }
         
-        input { width: 100%; padding: 10px; margin: 2px 0; border: 3px solid #ddd; border-radius: 10px; font-size: 1.5rem; text-align: center; outline: none; box-sizing: border-box; -webkit-appearance: none; }
-        .btn-main { width: 100%; padding: 12px; background: #2e7d32; color: white; border: none; border-radius: 10px; font-size: 1.3rem; font-weight: bold; margin-top: 2px; }
-        .accent-bar { display: flex; justify-content: center; gap: 4px; margin: 2px 0; }
-        .accent-btn { padding: 6px; border: 1px solid #ccc; border-radius: 8px; background: white; font-size: 1.2rem; min-width: 40px; }
-        .feedback { font-weight: bold; min-height: 22px; font-size: 0.95rem; margin: 0; display: flex; align-items: center; justify-content: center; }
-        .top-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px; }
+        .feedback { font-weight: bold; min-height: 22px; font-size: 0.95rem; margin: 2px 0; display: flex; align-items: center; justify-content: center; }
         .tab-btn { padding: 5px 8px; border: none; background: #ccc; border-radius: 6px; font-weight: bold; font-size: 0.8rem; }
         .active-tab { background: #2e7d32; color: white; }
     </style>
@@ -41,23 +68,28 @@
         </select>
     </div>
 
-    <div id="drillBox">
+    <div id="drillBox" style="display:flex; flex-direction:column; height:100%;">
         <div class="header-box">
             <div id="pLabel">...</div>
             <h1 id="vLabel">---</h1>
         </div>
         <div id="mLabel">---</div>
-        <div id="feedback" class="feedback"></div>
-        <input type="text" id="userInput" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Scrivi...">
-        <div class="accent-bar">
-            <button class="accent-btn" onclick="addAcc('à')">à</button>
-            <button class="accent-btn" onclick="addAcc('è')">è</button>
-            <button class="accent-btn" onclick="addAcc('é')">é</button>
-            <button class="accent-btn" onclick="addAcc('ì')">ì</button>
-            <button class="accent-btn" onclick="addAcc('ò')">ò</button>
-            <button class="accent-btn" onclick="addAcc('ù')">ù</button>
+        
+        <div class="spacer"></div>
+
+        <div class="interactive-zone">
+            <div id="feedback" class="feedback"></div>
+            <input type="text" id="userInput" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Tocca">
+            <div class="accent-bar">
+                <button class="accent-btn" onclick="addAcc('à')">à</button>
+                <button class="accent-btn" onclick="addAcc('è')">è</button>
+                <button class="accent-btn" onclick="addAcc('é')">é</button>
+                <button class="accent-btn" onclick="addAcc('ì')">ì</button>
+                <button class="accent-btn" onclick="addAcc('ò')">ò</button>
+                <button class="accent-btn" onclick="addAcc('ù')">ù</button>
+            </div>
+            <button class="btn-main" id="mainBtn" onclick="doAction()">Verifica</button>
         </div>
-        <button class="btn-main" id="mainBtn" onclick="doAction()">Verifica</button>
     </div>
 
     <div id="refBox" style="display:none;">
@@ -153,7 +185,7 @@
         }
     }
 
-    function showDrill() { document.getElementById('drillBox').style.display = 'block'; document.getElementById('refBox').style.display = 'none'; document.getElementById('t1').className = "tab-btn active-tab"; document.getElementById('t2').className = "tab-btn"; forceFocus(); }
+    function showDrill() { document.getElementById('drillBox').style.display = 'flex'; document.getElementById('refBox').style.display = 'none'; document.getElementById('t1').className = "tab-btn active-tab"; document.getElementById('t2').className = "tab-btn"; forceFocus(); }
     function showRef() { document.getElementById('drillBox').style.display = 'none'; document.getElementById('refBox').style.display = 'block'; document.getElementById('t1').className = "tab-btn"; document.getElementById('t2').className = "tab-btn active-tab"; updateTable(); }
 
     function updateTable() {
