@@ -3,44 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Italian Master v8.4</title>
+    <title>Italian Master v8.5</title>
     <style>
-        /* Fill the screen but keep content tight */
-        body { font-family: -apple-system, sans-serif; background: #f0f2f5; display: flex; justify-content: center; padding: 0; margin: 0; overflow: hidden; }
-        .card { background: white; padding: 15px; border-radius: 0 0 15px 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); text-align: center; width: 100%; max-width: 500px; margin-bottom: 0; }
+        body { font-family: -apple-system, sans-serif; background: #f0f2f5; display: flex; justify-content: center; padding: 0; margin: 0; overflow: hidden; height: 100vh; }
+        .card { background: white; padding: 10px; border-radius: 0; text-align: center; width: 100%; max-width: 500px; height: 100%; }
         
-        /* Larger fonts for phone readability */
-        h1 { margin: 2px 0; font-size: 2.5rem; line-height: 1.1; color: #1a1a1a; }
-        #pLabel { color: #666; font-size: 1.1rem; margin: 0; }
-        #mLabel { color: #2e7d32; font-weight: bold; font-size: 1.3rem; font-style: italic; margin: 2px 0; }
+        /* Tighter vertical stack */
+        h1 { margin: 0; font-size: 2.2rem; line-height: 1; color: #1a1a1a; }
+        #pLabel { color: #666; font-size: 1rem; margin-top: 2px; }
+        #mLabel { color: #2e7d32; font-weight: bold; font-size: 1.1rem; font-style: italic; margin: 0; }
         
-        /* Input & Buttons - Tighter vertical margins */
-        .btn-main { width: 100%; padding: 18px; background: #2e7d32; color: white; border: none; border-radius: 12px; font-size: 1.3rem; cursor: pointer; font-weight: bold; margin-top: 8px; }
-        input { width: 90%; padding: 15px; margin: 5px 0; border: 3px solid #ddd; border-radius: 12px; font-size: 1.5rem; text-align: center; outline: none; -webkit-appearance: none; }
+        /* Shorter interactive elements */
+        .btn-main { width: 100%; padding: 12px; background: #2e7d32; color: white; border: none; border-radius: 8px; font-size: 1.2rem; cursor: pointer; font-weight: bold; margin-top: 5px; }
+        input { width: 90%; padding: 10px; margin: 4px 0; border: 2px solid #ddd; border-radius: 10px; font-size: 1.4rem; text-align: center; outline: none; -webkit-appearance: none; }
         
-        .feedback { font-weight: bold; min-height: 35px; line-height: 1.2; font-size: 1.1rem; margin: 4px 0; }
+        .feedback { font-weight: bold; min-height: 25px; line-height: 1; font-size: 1rem; margin: 2px 0; }
         .hidden { display: none !important; }
         
-        .tab-btn { padding: 10px 18px; cursor: pointer; border: none; background: #ccc; border-radius: 8px; margin: 0 5px; font-weight: bold; font-size: 1rem; }
+        .tab-btn { padding: 6px 12px; cursor: pointer; border: none; background: #ccc; border-radius: 6px; margin: 0 5px; font-weight: bold; font-size: 0.9rem; }
         .active-tab { background: #2e7d32; color: white; }
         
-        .accent-bar { display: flex; justify-content: center; gap: 6px; margin-bottom: 8px; }
-        .accent-btn { padding: 12px; border: 1px solid #ccc; border-radius: 8px; background: white; cursor: pointer; font-size: 1.3rem; min-width: 48px; }
-        
-        /* Remove bottom space so keyboard doesn't shove the card too high */
-        #drillBox { margin-bottom: 0; padding-bottom: 0; }
+        /* Compact Accents */
+        .accent-bar { display: flex; justify-content: center; gap: 4px; margin-bottom: 4px; }
+        .accent-btn { padding: 8px; border: 1px solid #ccc; border-radius: 6px; background: white; cursor: pointer; font-size: 1.2rem; min-width: 40px; }
+
+        #skipBtn { background: none; border: none; color: #999; margin-top: 4px; text-decoration: underline; font-size: 0.8rem; padding: 5px; }
     </style>
 </head>
 <body>
 
 <div class="card">
-    <div style="margin-bottom: 10px;">
+    <div style="margin-bottom: 5px;">
         <button id="t1" class="tab-btn active-tab" onclick="showDrill()">Drill</button>
         <button id="t2" class="tab-btn" onclick="showRef()">List</button>
     </div>
 
     <div id="drillBox">
-        <select id="tenseSelect" onchange="resetTask()" style="width:100%; padding:10px; margin-bottom:8px; font-size: 1rem; border-radius: 8px;">
+        <select id="tenseSelect" onchange="resetTask()" style="width:100%; padding:6px; margin-bottom:4px; font-size: 0.9rem; border-radius: 6px;">
             <option value="presente">Presente</option>
             <option value="passato_prossimo">Passato Prossimo</option>
             <option value="imperfetto">Imperfetto</option>
@@ -48,12 +47,12 @@
             <option value="condizionale">Condizionale</option>
         </select>
         
-        <div id="pLabel">Caricamento...</div>
+        <div id="pLabel">...</div>
         <h1 id="vLabel">---</h1>
         <div id="mLabel">---</div>
 
         <div id="feedback" class="feedback"></div>
-        <input type="text" id="userInput" autocomplete="off" autocapitalize="none" placeholder="Scrivi qui..." autofocus>
+        <input type="text" id="userInput" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Scrivi qui...">
         
         <div class="accent-bar">
             <button class="accent-btn" onclick="addAcc('à')">à</button>
@@ -65,13 +64,13 @@
         </div>
 
         <button class="btn-main" id="mainBtn" onclick="doAction()">Verifica</button>
-        <button onclick="resetTask()" style="background: none; border: none; color: #999; margin-top: 8px; text-decoration: underline; font-size: 0.9rem;">Skip</button>
+        <button id="skipBtn" onclick="resetTask()">Skip</button>
     </div>
 
     <div id="refBox" style="display:none;">
-        <select id="vSelect" onchange="updateTable()" style="width:100%; padding:10px; border-radius: 8px; font-size: 1rem;"></select>
-        <div style="overflow-x:auto; margin-top:10px;">
-            <table style="width:100%; border-collapse:collapse; font-size:0.8rem; text-align:left;">
+        <select id="vSelect" onchange="updateTable()" style="width:100%; padding:8px; border-radius: 8px;"></select>
+        <div style="overflow-x:auto; margin-top:5px; height: 60vh;">
+            <table style="width:100%; border-collapse:collapse; font-size:0.75rem; text-align:left;">
                 <thead><tr style="background:#eee;"><th>Sogg.</th><th>Pres</th><th>Pass.Pro</th><th>Imp</th><th>Fut</th><th>Cond</th></tr></thead>
                 <tbody id="rt"></tbody>
             </table>
@@ -95,6 +94,12 @@
             imperfetto: ["bevevo", "bevevi", "beveva", "bevevamo", "bevevate", "bevevano"],
             futuro: ["berrò", "berrai", "berrà", "berremo", "berrete", "berranno"],
             condizionale: ["berrei", "berresti", "berrebbe", "berremmo", "berreste", "berrebbero"]},
+        {inf: "Andare", eng: "go", eng_p: "went", group: "ir", type: "ir", 
+            presente: ["vado", "vai", "va", "andiamo", "andate", "vanno"],
+            passato_prossimo: ["sono andato", "sei andato", "è andato", "siamo andati", "siete andati", "sono andati"],
+            imperfetto: ["andavo", "andavi", "andava", "andavamo", "andavate", "andavano"],
+            futuro: ["andrò", "andrai", "andrà", "andremo", "andrete", "andranno"],
+            condizionale: ["andrei", "andresti", "andrebbe", "andremmo", "andreste", "andrebbero"]},
         {inf: "Essere", eng: "be", eng_p: "was", group: "ir", type: "ir", 
             presente: ["sono", "sei", "è", "siamo", "siete", "sono"],
             passato_prossimo: ["sono stato", "sei stato", "è stato", "siamo stati", "siete stati", "sono stati"],
@@ -112,19 +117,7 @@
             passato_prossimo: ["ho fatto", "hai fatto", "ha fatto", "abbiamo fatto", "avete fatto", "hanno fatto"],
             imperfetto: ["facevo", "facevi", "faceva", "facevamo", "facevate", "facevano"],
             futuro: ["farò", "farai", "farà", "faremo", "farete", "faranno"],
-            condizionale: ["farei", "faresti", "farebbe", "faremmo", "fareste", "farebbero"]},
-        {inf: "Volere", eng: "want", eng_p: "wanted", group: "ir", type: "ir",
-            presente: ["voglio", "vuoi", "vuole", "vogliamo", "volete", "vogliono"],
-            passato_prossimo: ["ho voluto", "hai voluto", "ha voluto", "abbiamo voluto", "avete voluto", "hanno voluto"],
-            imperfetto: ["volevo", "volevi", "voleva", "volevamo", "volevate", "volevano"],
-            futuro: ["vorrò", "vorrai", "vorrà", "vorremo", "vorrete", "vorranno"],
-            condizionale: ["vorrei", "vorresti", "vorrebbe", "vorremmo", "vorreste", "vorrebbero"]},
-        {inf: "Dovere", eng: "must", eng_p: "had to", group: "ir", type: "ir",
-            presente: ["devo", "devi", "deve", "dobbiamo", "dovete", "devono"],
-            passato_prossimo: ["ho dovuto", "hai dovuto", "ha dovuto", "abbiamo dovuto", "avete dovuto", "hanno dovuto"],
-            imperfetto: ["dovevo", "dovevi", "doveva", "dovevamo", "dovevate", "dovevano"],
-            futuro: ["dovrò", "dovrai", "dovrà", "dovremo", "dovrete", "dovranno"],
-            condizionale: ["dovrei", "dovresti", "dovrebbe", "dovremmo", "dovreste", "dovrebbero"]}
+            condizionale: ["farei", "faresti", "farebbe", "faremmo", "fareste", "farebbero"]}
     ];
 
     var aux_avere = ["ho", "hai", "ha", "abbiamo", "avete", "hanno"];
@@ -143,11 +136,11 @@
 
     var task = null;
     var wait = false;
+    var inputEl = document.getElementById('userInput');
 
     function cleanInf(v) {
         if (v.type === "ir") return v.inf;
-        if (v.type === "refl") return v.inf.substring(0, v.inf.length - 2) + "e";
-        return v.inf;
+        return (v.type === "refl") ? v.inf.substring(0, v.inf.length - 2) + "e" : v.inf;
     }
 
     function getConj(v, pi, tn) {
@@ -182,29 +175,29 @@
         else if (tn === 'futuro') hint += "will " + v.eng;
         else hint += "would " + v.eng;
         document.getElementById('mLabel').innerText = '"' + hint + '"';
-        document.getElementById('userInput').value = "";
-        document.getElementById('userInput').disabled = false;
-        document.getElementById('userInput').style.background = "white";
+        
+        inputEl.value = "";
+        inputEl.readOnly = false;
+        inputEl.style.background = "white";
         document.getElementById('feedback').innerText = "";
         document.getElementById('mainBtn').innerText = "Verifica";
         
-        // FORCE FOCUS
-        document.getElementById('userInput').focus();
+        // Re-focus instantly
+        setTimeout(function(){ inputEl.focus(); }, 10);
     }
 
     function doAction() {
         if (wait) { resetTask(); return; }
-        var inp = document.getElementById('userInput').value.toLowerCase().trim();
+        var inp = inputEl.value.toLowerCase().trim();
         if (inp === task.ans) {
             document.getElementById('feedback').innerHTML = "<span style='color:green'>Ottimo!</span>";
-            setTimeout(resetTask, 600);
+            setTimeout(resetTask, 500);
         } else {
             document.getElementById('feedback').innerHTML = "No: <b style='color:#d32f2f'>" + task.ans + "</b>";
-            document.getElementById('userInput').disabled = true;
-            document.getElementById('userInput').style.background = "#ffd6d6";
-            document.getElementById('mainBtn').innerText = "Next";
+            inputEl.readOnly = true;
+            inputEl.style.background = "#ffd6d6";
+            document.getElementById('mainBtn').innerText = "Avanti";
             wait = true;
-            document.getElementById('mainBtn').focus();
         }
     }
 
@@ -213,7 +206,7 @@
         document.getElementById('refBox').style.display = 'none';
         document.getElementById('t1').className = "tab-btn active-tab";
         document.getElementById('t2').className = "tab-btn";
-        document.getElementById('userInput').focus();
+        inputEl.focus();
     }
 
     function showRef() {
@@ -240,14 +233,12 @@
     }
 
     function addAcc(c) {
-        var el = document.getElementById('userInput');
         if(!wait) { 
-            el.value += c; 
-            el.focus(); 
+            inputEl.value += c; 
+            inputEl.focus(); 
         }
     }
 
-    // Startup
     var vs = document.getElementById('vSelect');
     for(var i=0; i<verbs.length; i++) {
         var o = document.createElement('option');
