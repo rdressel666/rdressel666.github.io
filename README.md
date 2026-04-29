@@ -3,43 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Italian Master v8.5</title>
+    <title>Italian Master v8.6</title>
     <style>
-        body { font-family: -apple-system, sans-serif; background: #f0f2f5; display: flex; justify-content: center; padding: 0; margin: 0; overflow: hidden; height: 100vh; }
-        .card { background: white; padding: 10px; border-radius: 0; text-align: center; width: 100%; max-width: 500px; height: 100%; }
+        /* Force the app to fill the screen and stay at the top */
+        html, body { height: 100%; margin: 0; padding: 0; background: #f0f2f5; overflow: hidden; }
+        body { font-family: -apple-system, sans-serif; display: flex; flex-direction: column; align-items: center; }
         
-        /* Tighter vertical stack */
-        h1 { margin: 0; font-size: 2.2rem; line-height: 1; color: #1a1a1a; }
-        #pLabel { color: #666; font-size: 1rem; margin-top: 2px; }
-        #mLabel { color: #2e7d32; font-weight: bold; font-size: 1.1rem; font-style: italic; margin: 0; }
-        
-        /* Shorter interactive elements */
-        .btn-main { width: 100%; padding: 12px; background: #2e7d32; color: white; border: none; border-radius: 8px; font-size: 1.2rem; cursor: pointer; font-weight: bold; margin-top: 5px; }
-        input { width: 90%; padding: 10px; margin: 4px 0; border: 2px solid #ddd; border-radius: 10px; font-size: 1.4rem; text-align: center; outline: none; -webkit-appearance: none; }
-        
-        .feedback { font-weight: bold; min-height: 25px; line-height: 1; font-size: 1rem; margin: 2px 0; }
-        .hidden { display: none !important; }
-        
-        .tab-btn { padding: 6px 12px; cursor: pointer; border: none; background: #ccc; border-radius: 6px; margin: 0 5px; font-weight: bold; font-size: 0.9rem; }
-        .active-tab { background: #2e7d32; color: white; }
-        
-        /* Compact Accents */
-        .accent-bar { display: flex; justify-content: center; gap: 4px; margin-bottom: 4px; }
-        .accent-btn { padding: 8px; border: 1px solid #ccc; border-radius: 6px; background: white; cursor: pointer; font-size: 1.2rem; min-width: 40px; }
+        .card { 
+            background: white; 
+            width: 100%; 
+            max-width: 600px; 
+            height: 100%; /* Fill the whole screen */
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+            box-sizing: border-box;
+        }
 
-        #skipBtn { background: none; border: none; color: #999; margin-top: 4px; text-decoration: underline; font-size: 0.8rem; padding: 5px; }
+        /* Drill Area - Tightly packed */
+        #drillBox { flex-grow: 1; display: flex; flex-direction: column; }
+        
+        h1 { margin: 0; font-size: 3rem; line-height: 1; color: #1a1a1a; }
+        #pLabel { color: #666; font-size: 1.2rem; margin-bottom: 2px; }
+        #mLabel { color: #2e7d32; font-weight: bold; font-size: 1.4rem; font-style: italic; margin: 0; }
+        
+        /* Larger Input for better touch targets */
+        input { 
+            width: 100%; 
+            padding: 15px; 
+            margin: 10px 0; 
+            border: 3px solid #ddd; 
+            border-radius: 12px; 
+            font-size: 1.8rem; /* Big text for phone */
+            text-align: center; 
+            outline: none; 
+            box-sizing: border-box;
+            -webkit-appearance: none;
+        }
+        
+        .btn-main { 
+            width: 100%; 
+            padding: 20px; 
+            background: #2e7d32; 
+            color: white; 
+            border: none; 
+            border-radius: 12px; 
+            font-size: 1.5rem; 
+            font-weight: bold; 
+            cursor: pointer;
+        }
+
+        .accent-bar { display: flex; justify-content: center; gap: 8px; margin: 10px 0; }
+        .accent-btn { padding: 12px; border: 1px solid #ccc; border-radius: 8px; background: white; font-size: 1.5rem; min-width: 50px; }
+
+        .feedback { font-weight: bold; min-height: 40px; font-size: 1.2rem; margin: 5px 0; display: flex; align-items: center; justify-content: center; }
+        
+        .tab-bar { display: flex; justify-content: center; margin-bottom: 10px; gap: 10px; }
+        .tab-btn { padding: 10px 20px; border: none; background: #ccc; border-radius: 8px; font-weight: bold; }
+        .active-tab { background: #2e7d32; color: white; }
     </style>
 </head>
-<body>
+<body onclick="forceFocus()">
 
 <div class="card">
-    <div style="margin-bottom: 5px;">
+    <div class="tab-bar">
         <button id="t1" class="tab-btn active-tab" onclick="showDrill()">Drill</button>
         <button id="t2" class="tab-btn" onclick="showRef()">List</button>
     </div>
 
     <div id="drillBox">
-        <select id="tenseSelect" onchange="resetTask()" style="width:100%; padding:6px; margin-bottom:4px; font-size: 0.9rem; border-radius: 6px;">
+        <select id="tenseSelect" onchange="resetTask()" style="width:100%; padding:10px; font-size: 1.1rem; border-radius: 8px; margin-bottom: 10px;">
             <option value="presente">Presente</option>
             <option value="passato_prossimo">Passato Prossimo</option>
             <option value="imperfetto">Imperfetto</option>
@@ -52,7 +85,7 @@
         <div id="mLabel">---</div>
 
         <div id="feedback" class="feedback"></div>
-        <input type="text" id="userInput" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Scrivi qui...">
+        <input type="text" id="userInput" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Tocca per scrivere">
         
         <div class="accent-bar">
             <button class="accent-btn" onclick="addAcc('à')">à</button>
@@ -64,14 +97,14 @@
         </div>
 
         <button class="btn-main" id="mainBtn" onclick="doAction()">Verifica</button>
-        <button id="skipBtn" onclick="resetTask()">Skip</button>
+        <button onclick="resetTask()" style="background:none; border:none; color:#999; margin-top:15px; text-decoration:underline;">Skip Verb</button>
     </div>
 
     <div id="refBox" style="display:none;">
-        <select id="vSelect" onchange="updateTable()" style="width:100%; padding:8px; border-radius: 8px;"></select>
-        <div style="overflow-x:auto; margin-top:5px; height: 60vh;">
-            <table style="width:100%; border-collapse:collapse; font-size:0.75rem; text-align:left;">
-                <thead><tr style="background:#eee;"><th>Sogg.</th><th>Pres</th><th>Pass.Pro</th><th>Imp</th><th>Fut</th><th>Cond</th></tr></thead>
+        <select id="vSelect" onchange="updateTable()" style="width:100%; padding:10px; border-radius: 8px;"></select>
+        <div style="overflow-y:auto; margin-top:10px;">
+            <table style="width:100%; border-collapse:collapse; font-size:0.9rem; text-align:left;">
+                <thead><tr style="background:#eee;"><th>Sogg.</th><th>Pres</th><th>Pass.Pro</th><th>Imp</th></tr></thead>
                 <tbody id="rt"></tbody>
             </table>
         </div>
@@ -121,12 +154,7 @@
     ];
 
     var aux_avere = ["ho", "hai", "ha", "abbiamo", "avete", "hanno"];
-    var pro = [
-        {it: "Io", en: "I", r: "mi"}, {it: "Tu", en: "You", r: "ti"},
-        {it: "Lui/Lei", en: "He/She", r: "si"}, {it: "Noi", en: "We", r: "ci"},
-        {it: "Voi", en: "You (pl)", r: "vi"}, {it: "Loro", en: "They", r: "si"}
-    ];
-
+    var pro = [{it:"Io",en:"I",r:"mi"},{it:"Tu",en:"You",r:"ti"},{it:"Lui/Lei",en:"He/She",r:"si"},{it:"Noi",en:"We",r:"ci"},{it:"Voi",en:"You (pl)",r:"vi"},{it:"Loro",en:"They",r:"si"}];
     var suf = {
         presente: {are:["o","i","a","iamo","ate","ano"], ere:["o","i","e","iamo","ete","ono"], ire:["o","i","e","iamo","ite","ono"], isc:["isco","isci","isce","iamo","ite","iscono"]},
         imperfetto: {are:["avo","avi","ava","avamo","avate","avano"], ere:["evo","evi","eva","evamo","evate","evano"], ire:["ivo","ivi","iva","ivamo","ivate","ivano"], isc:["ivo","ivi","iva","ivamo","ivate","ivano"]},
@@ -134,14 +162,12 @@
         condizionale: {are:["erei","eresti","erebbe","eremmo","ereste","erebbero"], ere:["erei","eresti","erebbe","eremmo","ereste","erebbero"], ire:["irei","iresti","irebbe","iremmo","ireste","irebbero"], isc:["irei","iresti","irebbe","iremmo","ireste","irebbero"]}
     };
 
-    var task = null;
-    var wait = false;
+    var task = null, wait = false;
     var inputEl = document.getElementById('userInput');
 
-    function cleanInf(v) {
-        if (v.type === "ir") return v.inf;
-        return (v.type === "refl") ? v.inf.substring(0, v.inf.length - 2) + "e" : v.inf;
-    }
+    function forceFocus() { if(!wait) inputEl.focus(); }
+
+    function cleanInf(v) { return (v.type === "refl") ? v.inf.substring(0, v.inf.length - 2) + "e" : v.inf; }
 
     function getConj(v, pi, tn) {
         if (v.type === "ir") return v[tn][pi];
@@ -149,9 +175,7 @@
             var res = aux_avere[pi] + " " + (v.p_part || "");
             return (v.type === "refl") ? pro[pi].r + " " + res : res;
         }
-        var s = v.stem;
-        var gt = (tn === 'presente' && v.type === 'isc') ? 'isc' : v.group;
-        var suffix = suf[tn][gt][pi];
+        var s = v.stem, gt = (tn === 'presente' && v.type === 'isc') ? 'isc' : v.group, suffix = suf[tn][gt][pi];
         var needsH = (v.type === "reg_h" && ((tn === 'presente' && (pi === 1 || pi === 3)) || tn === 'futuro' || tn === 'condizionale'));
         if (s.charAt(s.length - 1) === 'i' && suffix.charAt(0) === 'i') s = s.substring(0, s.length - 1);
         if (needsH) s += "h";
@@ -167,83 +191,38 @@
         task = { ans: getConj(v, pi, tn).toLowerCase() };
         document.getElementById('pLabel').innerText = pro[pi].it + " (" + pro[pi].en + ")";
         document.getElementById('vLabel').innerText = cleanInf(v);
-        var p = pro[pi].en;
-        var hint = p + " ";
-        if (tn === 'presente') hint += v.eng + (p === "He/She" ? "s" : "");
-        else if (tn === 'passato_prossimo') hint += (v.eng_p || "");
-        else if (tn === 'imperfetto') hint += "used to " + v.eng;
-        else if (tn === 'futuro') hint += "will " + v.eng;
-        else hint += "would " + v.eng;
+        var hint = pro[pi].en + " " + ((tn === 'presente') ? v.eng : (tn === 'passato_prossimo' ? (v.eng_p||"") : (tn === 'imperfetto' ? "used to "+v.eng : (tn === 'futuro' ? "will "+v.eng : "would "+v.eng))));
         document.getElementById('mLabel').innerText = '"' + hint + '"';
-        
-        inputEl.value = "";
-        inputEl.readOnly = false;
-        inputEl.style.background = "white";
-        document.getElementById('feedback').innerText = "";
-        document.getElementById('mainBtn').innerText = "Verifica";
-        
-        // Re-focus instantly
-        setTimeout(function(){ inputEl.focus(); }, 10);
+        inputEl.value = ""; inputEl.readOnly = false; inputEl.style.background = "white";
+        document.getElementById('feedback').innerText = ""; document.getElementById('mainBtn').innerText = "Verifica";
+        setTimeout(forceFocus, 50);
     }
 
     function doAction() {
         if (wait) { resetTask(); return; }
         var inp = inputEl.value.toLowerCase().trim();
         if (inp === task.ans) {
-            document.getElementById('feedback').innerHTML = "<span style='color:green'>Ottimo!</span>";
+            document.getElementById('feedback').innerHTML = "<span style='color:green'>Ottimo! ✅</span>";
             setTimeout(resetTask, 500);
         } else {
             document.getElementById('feedback').innerHTML = "No: <b style='color:#d32f2f'>" + task.ans + "</b>";
-            inputEl.readOnly = true;
-            inputEl.style.background = "#ffd6d6";
+            inputEl.readOnly = true; inputEl.style.background = "#ffd6d6";
             document.getElementById('mainBtn').innerText = "Avanti";
             wait = true;
         }
     }
 
-    function showDrill() {
-        document.getElementById('drillBox').style.display = 'block';
-        document.getElementById('refBox').style.display = 'none';
-        document.getElementById('t1').className = "tab-btn active-tab";
-        document.getElementById('t2').className = "tab-btn";
-        inputEl.focus();
-    }
-
-    function showRef() {
-        document.getElementById('drillBox').style.display = 'none';
-        document.getElementById('refBox').style.display = 'block';
-        document.getElementById('t1').className = "tab-btn";
-        document.getElementById('t2').className = "tab-btn active-tab";
-        updateTable();
-    }
+    function showDrill() { document.getElementById('drillBox').style.display = 'block'; document.getElementById('refBox').style.display = 'none'; document.getElementById('t1').className = "tab-btn active-tab"; document.getElementById('t2').className = "tab-btn"; forceFocus(); }
+    function showRef() { document.getElementById('drillBox').style.display = 'none'; document.getElementById('refBox').style.display = 'block'; document.getElementById('t1').className = "tab-btn"; document.getElementById('t2').className = "tab-btn active-tab"; updateTable(); }
 
     function updateTable() {
-        var vi = document.getElementById('vSelect').value;
-        var v = verbs[vi];
-        var h = "";
-        for(var i=0; i<6; i++) {
-            h += "<tr><td><b>" + pro[i].it + "</b></td>" +
-                 "<td>" + getConj(v,i,'presente') + "</td>" +
-                 "<td>" + getConj(v,i,'passato_prossimo') + "</td>" +
-                 "<td>" + getConj(v,i,'imperfetto') + "</td>" +
-                 "<td>" + getConj(v,i,'futuro') + "</td>" +
-                 "<td>" + getConj(v,i,'condizionale') + "</td></tr>";
-        }
+        var v = verbs[document.getElementById('vSelect').value], h = "";
+        for(var i=0; i<6; i++) { h += "<tr><td><b>" + pro[i].it + "</b></td>" + "<td>" + getConj(v,i,'presente') + "</td>" + "<td>" + getConj(v,i,'passato_prossimo') + "</td>" + "<td>" + getConj(v,i,'imperfetto') + "</td></tr>"; }
         document.getElementById('rt').innerHTML = h;
     }
 
-    function addAcc(c) {
-        if(!wait) { 
-            inputEl.value += c; 
-            inputEl.focus(); 
-        }
-    }
-
     var vs = document.getElementById('vSelect');
-    for(var i=0; i<verbs.length; i++) {
-        var o = document.createElement('option');
-        o.value = i; o.innerText = cleanInf(verbs[i]); vs.appendChild(o);
-    }
+    for(var i=0; i<verbs.length; i++) { var o = document.createElement('option'); o.value = i; o.innerText = cleanInf(verbs[i]); vs.appendChild(o); }
     document.addEventListener('keydown', function(e) { if(e.keyCode === 13) doAction(); });
     resetTask();
 </script>
