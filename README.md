@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Italian Master v9.6</title>
+    <title>Italian Master v9.7</title>
     <style>
         html, body { 
             margin: 0; padding: 0; min-height: 100%; 
@@ -14,7 +14,6 @@
         
         .card { 
             background: white; width: 100%; max-width: 500px; 
-            /* Push down from the very top notch area */
             margin-top: 20px; 
             padding: 10px; 
             box-sizing: border-box;
@@ -49,7 +48,7 @@
         .active-tab { background: #2e7d32; color: white; }
     </style>
 </head>
-<body>
+<body onclick="forceFocus()">
 
 <div class="card">
     <div class="top-row">
@@ -115,9 +114,9 @@
         {inf:"Bere", eng:"drink", eng_p:"drank", group:"ir", type:"ir", presente:["bevo","bevi","beve","beviamo","bevete","bevono"], passato_prossimo:["ho bevuto","hai bevuto","ha bevuto","abbiamo bevuto","avete bevuto","hanno bevuto"], imperfetto:["bevevo","bevevi","beveva","bevevamo","bevevate","bevevano"], futuro:["berrò","berrai","berrà","berremo","berrete","berranno"], condizionale:["berrei","berresti","berrebbe","berremmo","berreste","berrebbero"]},
         {inf:"Andare", eng:"go", eng_p:"went", group:"ir", type:"ir", presente:["vado","vai","va","andiamo","andate","vanno"], passato_prossimo:["sono andato","sei andato","è andato","siamo andati","siete andati","sono andati"], imperfetto:["andavo","andavi","andava","andavamo","andavate","andavano"], futuro:["andrò","andrai","andrà","andremo","andrete","andranno"], condizionale:["andrei","andresti","andrebbe","andremmo","andreste","andrebbero"]},
         {inf:"Essere", eng:"be", eng_p:"was", group:"ir", type:"ir", presente:["sono","sei","è","siamo","siete","sono"], passato_prossimo:["sono stato","sei stato","è stato","siamo stati","siete stati","sono stati"], imperfetto:["ero","eri","era","eravamo","eravate","erano"], futuro:["sarò","sarai","sarà","saremo","sarete","saranno"], condizionale:["sarei","saresti","sarebbe","saremmo","sareste","sarebbero"]},
-        {inf:"Avere", eng:"have", eng_p:"had", group:"ir", type: "ir", presente:["ho","hai","ha","abbiamo","avete","hanno"], passato_prossimo:["ho avuto","hai avuto","ha avuto","abbiamo avuto","avete avuto","hanno avuto"], imperfetto:["avevo","avevi","aveva","avevamo","avevate","avevano"], futuro:["avrò","avrai","avrà","avremo","avrete","avranno"], condizionale:["avrei","avresti","avrebbe","avremmo","avreste","avrebbero"]},
-        {inf:"Fare", eng:"do", eng_p:"did", group:"ir", type: "ir", presente:["faccio","fai","fa","facciamo","fate","fanno"], passato_prossimo:["ho fatto","hai fatto","ha fatto","abbiamo fatto","avete fatto","hanno fatto"], imperfetto:["facevo","facevi","faceva","facevamo","facevate","facevano"], futuro:["farò","farai","farà","faremo","farete","faranno"], condizionale:["farei","faresti","farebbe","faremmo","fareste","farebbero"]},
-        {inf:"Volere", eng:"want", eng_p:"wanted", group:"ir", type: "ir", presente:["voglio","vuoi","vuole","vogliamo","volete","vogliono"], passato_prossimo:["ho voluto","hai voluto","ha voluto","abbiamo voluto","avete voluto","hanno voluto"], imperfetto:["volevo","volevi","voleva","volevamo","volevate","volevano"], futuro:["vorrò","vorrai","vorrà","vorremo","vorrete","vorranno"], condizionale:["vorrei","vorresti","vorrebbe","vorremmo","vorreste","vorrebbero"]},
+        {inf:"Avere", eng:"have", eng_p:"had", group: "ir", type: "ir", presente:["ho","hai","ha","abbiamo","avete","hanno"], passato_prossimo:["ho avuto","hai avuto","ha avuto","abbiamo avuto","avete avuto","hanno avuto"], imperfetto:["avevo","avevi","aveva","avevamo","avevate","avevano"], futuro:["avrò","avrai","avrà","avremo","avrete","avranno"], condizionale:["avrei","avresti","avrebbe","avremmo","avreste","avrebbero"]},
+        {inf:"Fare", eng:"do", eng_p:"did", group: "ir", type: "ir", presente:["faccio","fai","fa","facciamo","fate","fanno"], passato_prossimo:["ho fatto","hai fatto","ha fatto","abbiamo fatto","avete fatto","hanno fatto"], imperfetto:["facevo","facevi","faceva","facevamo","facevate","facevano"], futuro:["farò","farai","farà","faremo","farete","faranno"], condizionale:["farei","faresti","farebbe","faremmo","fareste","farebbero"]},
+        {inf:"Volere", eng:"want", eng_p:"wanted", group: "ir", type: "ir", presente:["voglio","vuoi","vuole","vogliamo","volete","vogliono"], passato_prossimo:["ho voluto","hai voluto","ha voluto","abbiamo voluto","avete voluto","hanno voluto"], imperfetto:["volevo","volevi","voleva","volevamo","volevate","volevano"], futuro:["vorrò","vorrai","vorrà","vorremo","vorrete","vorranno"], condizionale:["vorrei","vorresti","vorrebbe","vorremmo","vorreste","vorrebbero"]},
         {inf:"Dovere", eng: "must", eng_p: "had to", group: "ir", type: "ir", presente: ["devo", "devi", "deve", "dobbiamo", "dovete", "devono"], passato_prossimo: ["ho dovuto", "hai dovuto", "ha dovuto", "abbiamo dovuto", "avete dovuto", "hanno dovuto"], imperfetto: ["dovevo", "dovevi", "doveva", "dovevamo", "dovevate", "dovevano"], futuro: ["dovrò", "dovrai", "dovrà", "dovremo", "dovrete", "dovranno"], condizionale: ["dovrei", "dovresti", "dovrebbe", "dovremmo", "dovreste", "dovrebbero"]},
         {inf:"Piacere", eng: "like", eng_p: "liked", group: "ir", type: "ir", presente: ["piaccio", "piaci", "piace", "piacciamo", "piacete", "piacciono"], passato_prossimo: ["sono piaciuto", "sei piaciuto", "è piaciuto", "siamo piaciuti", "siete piaciuti", "sono piaciuti"], imperfetto: ["piacevo", "piacevi", "piaceva", "piacevamo", "piacevate", "piacevano"], futuro: ["piacerò", "piacerai", "piacerà", "piaceremo", "piacerete", "piaceranno"], condizionale: ["piacerei", "piaceresti", "piacerebbe", "piaceremmo", "piacereste", "piacerebbero"]}
     ];
@@ -159,7 +158,9 @@
         document.getElementById('mLabel').innerText = '"' + hint + '"';
         inputEl.value = ""; inputEl.readOnly = false; inputEl.style.background = "white";
         document.getElementById('feedback').innerText = ""; document.getElementById('mainBtn').innerText = "Verifica";
-        setTimeout(forceFocus, 100);
+        
+        // The Fix: Force the keyboard back up after the DOM update
+        setTimeout(forceFocus, 50);
     }
 
     function doAction() {
