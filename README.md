@@ -3,58 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Italian Master v9.5</title>
+    <title>Italian Master v9.6</title>
     <style>
-        /* Prevents the whole page from bouncing/scrolling */
         html, body { 
-            margin: 0; padding: 0; height: 100%; width: 100%; 
-            position: fixed; overflow: hidden; background: #f0f2f5; 
+            margin: 0; padding: 0; min-height: 100%; 
+            background: #f0f2f5; overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
         }
-        body { font-family: -apple-system, sans-serif; display: flex; flex-direction: column; }
+        body { font-family: -apple-system, sans-serif; display: flex; flex-direction: column; align-items: center; }
         
-        /* The Card is now the only thing that can scroll if needed */
         .card { 
             background: white; width: 100%; max-width: 500px; 
-            margin: 0 auto; padding: 5px 10px; box-sizing: border-box;
-            overflow-y: auto; -webkit-overflow-scrolling: touch;
+            /* Push down from the very top notch area */
+            margin-top: 20px; 
+            padding: 10px; 
+            box-sizing: border-box;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
 
-        .top-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
+        .top-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
         .header-box { display: flex; align-items: baseline; justify-content: center; gap: 8px; }
-        #pLabel { color: #d32f2f; font-size: 1rem; font-weight: bold; text-transform: uppercase; }
-        h1 { margin: 0; font-size: 2.1rem; line-height: 1; color: #1a1a1a; }
+        #pLabel { color: #d32f2f; font-size: 1.1rem; font-weight: bold; text-transform: uppercase; }
+        h1 { margin: 0; font-size: 2.3rem; line-height: 1; color: #1a1a1a; }
         #mLabel { color: #2e7d32; font-weight: bold; font-size: 1.1rem; font-style: italic; margin-bottom: 5px; text-align: center; }
         
         input { 
-            width: 100%; padding: 12px; margin: 4px 0; 
+            width: 100%; padding: 12px; margin: 5px 0; 
             border: 3px solid #ddd; border-radius: 10px; 
-            font-size: 1.5rem; text-align: center; outline: none; 
+            font-size: 1.6rem; text-align: center; outline: none; 
             box-sizing: border-box; -webkit-appearance: none; 
         }
         
-        /* Button moved ABOVE accents to keep it visible */
+        .accent-bar { display: flex; justify-content: center; gap: 5px; margin: 5px 0; }
+        .accent-btn { padding: 12px; border: 1px solid #ccc; border-radius: 8px; background: white; font-size: 1.4rem; min-width: 48px; touch-action: manipulation; }
+
         .btn-main { 
-            width: 100%; padding: 14px; background: #2e7d32; color: white; 
-            border: none; border-radius: 12px; font-size: 1.4rem; font-weight: bold; 
-            margin: 5px 0;
+            width: 100%; padding: 16px; background: #2e7d32; color: white; 
+            border: none; border-radius: 12px; font-size: 1.5rem; font-weight: bold; 
+            margin-top: 5px; touch-action: manipulation;
         }
         
-        .accent-bar { display: flex; justify-content: center; gap: 4px; margin-bottom: 5px; }
-        .accent-btn { padding: 8px; border: 1px solid #ccc; border-radius: 8px; background: white; font-size: 1.3rem; min-width: 42px; }
-        .feedback { font-weight: bold; min-height: 25px; font-size: 1.1rem; margin: 2px 0; text-align: center; }
-        
-        .tab-btn { padding: 6px 10px; border: none; background: #ccc; border-radius: 6px; font-weight: bold; font-size: 0.85rem; }
+        .feedback { font-weight: bold; min-height: 25px; font-size: 1.1rem; margin: 4px 0; text-align: center; }
+        .tab-btn { padding: 8px 12px; border: none; background: #ccc; border-radius: 8px; font-weight: bold; font-size: 0.9rem; }
         .active-tab { background: #2e7d32; color: white; }
     </style>
 </head>
-<body onclick="forceFocus()">
+<body>
+
 <div class="card">
     <div class="top-row">
         <div>
             <button id="t1" class="tab-btn active-tab" onclick="showDrill()">Drill</button>
             <button id="t2" class="tab-btn" onclick="showRef()">List</button>
         </div>
-        <select id="tenseSelect" onchange="resetTask()" style="padding:4px; font-size: 0.85rem; border-radius: 6px;">
+        <select id="tenseSelect" onchange="resetTask()" style="padding:5px; font-size: 0.9rem; border-radius: 6px;">
             <option value="presente">Pres</option>
             <option value="passato_prossimo">Pass.Pro</option>
             <option value="imperfetto">Imp</option>
@@ -67,24 +70,24 @@
         <div class="header-box"><div id="pLabel">...</div><h1 id="vLabel">---</h1></div>
         <div id="mLabel">---</div>
         <div id="feedback" class="feedback"></div>
-        <input type="text" id="userInput" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Scrivi...">
+        <input type="text" id="userInput" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Tocca">
         
-        <button class="btn-main" id="mainBtn" onclick="doAction()">Verifica</button>
-
         <div class="accent-bar">
-            <button class="accent-btn" onclick="addAcc('à')">à</button>
-            <button class="accent-btn" onclick="addAcc('è')">è</button>
-            <button class="accent-btn" onclick="addAcc('é')">é</button>
-            <button class="accent-btn" onclick="addAcc('ì')">ì</button>
-            <button class="accent-btn" onclick="addAcc('ò')">ò</button>
-            <button class="accent-btn" onclick="addAcc('ù')">ù</button>
+            <button type="button" class="accent-btn" onclick="addAcc('à')">à</button>
+            <button type="button" class="accent-btn" onclick="addAcc('è')">è</button>
+            <button type="button" class="accent-btn" onclick="addAcc('é')">é</button>
+            <button type="button" class="accent-btn" onclick="addAcc('ì')">ì</button>
+            <button type="button" class="accent-btn" onclick="addAcc('ò')">ò</button>
+            <button type="button" class="accent-btn" onclick="addAcc('ù')">ù</button>
         </div>
+
+        <button class="btn-main" id="mainBtn" onclick="doAction()">Verifica</button>
     </div>
 
     <div id="refBox" style="display:none;">
         <select id="vSelect" onchange="updateTable()" style="width:100%; padding:10px; border-radius: 8px;"></select>
-        <div style="overflow-y:auto; margin-top:10px; max-height: 250px;">
-            <table style="width:100%; border-collapse:collapse; font-size:0.85rem; text-align:left;">
+        <div style="overflow-y:auto; margin-top:10px; max-height: 300px;">
+            <table style="width:100%; border-collapse:collapse; font-size:0.9rem; text-align:left;">
                 <thead><tr style="background:#eee;"><th>Sogg.</th><th>Pres</th><th>Pass.Pro</th><th>Imp</th></tr></thead>
                 <tbody id="rt"></tbody>
             </table>
@@ -108,13 +111,13 @@
         {inf:"Viaggiare", stem:"viaggi", p_part:"viaggiato", eng:"travel", eng_p:"traveled", group:"are", type:"reg"},
         {inf:"Leggere", stem:"legg", p_part:"letto", eng:"read", eng_p:"read", group:"ere", type:"reg"},
         {inf:"Prendere", stem:"prend", p_part:"preso", eng:"take", eng_p:"took", group:"ere", type:"reg"},
-        {inf:"Vedere", stem:"ved", p_part:"visto", eng: "see", eng_p: "saw", group:"ere", type:"reg"},
+        {inf:"Vedere", stem:"ved", p_part:"visto", eng:"see", eng_p: "saw", group:"ere", type:"reg"},
         {inf:"Bere", eng:"drink", eng_p:"drank", group:"ir", type:"ir", presente:["bevo","bevi","beve","beviamo","bevete","bevono"], passato_prossimo:["ho bevuto","hai bevuto","ha bevuto","abbiamo bevuto","avete bevuto","hanno bevuto"], imperfetto:["bevevo","bevevi","beveva","bevevamo","bevevate","bevevano"], futuro:["berrò","berrai","berrà","berremo","berrete","berranno"], condizionale:["berrei","berresti","berrebbe","berremmo","berreste","berrebbero"]},
         {inf:"Andare", eng:"go", eng_p:"went", group:"ir", type:"ir", presente:["vado","vai","va","andiamo","andate","vanno"], passato_prossimo:["sono andato","sei andato","è andato","siamo andati","siete andati","sono andati"], imperfetto:["andavo","andavi","andava","andavamo","andavate","andavano"], futuro:["andrò","andrai","andrà","andremo","andrete","andranno"], condizionale:["andrei","andresti","andrebbe","andremmo","andreste","andrebbero"]},
         {inf:"Essere", eng:"be", eng_p:"was", group:"ir", type:"ir", presente:["sono","sei","è","siamo","siete","sono"], passato_prossimo:["sono stato","sei stato","è stato","siamo stati","siete stati","sono stati"], imperfetto:["ero","eri","era","eravamo","eravate","erano"], futuro:["sarò","sarai","sarà","saremo","sarete","saranno"], condizionale:["sarei","saresti","sarebbe","saremmo","sareste","sarebbero"]},
-        {inf:"Avere", eng:"have", eng_p:"had", group:"ir", type:"ir", presente:["ho","hai","ha","abbiamo","avete","hanno"], passato_prossimo:["ho avuto","hai avuto","ha avuto","abbiamo avuto","avete avuto","hanno avuto"], imperfetto:["avevo","avevi","aveva","avevamo","avevate","avevano"], futuro:["avrò","avrai","avrà","avremo","avrete","avranno"], condizionale:["avrei","avresti","avrebbe","avremmo","avreste","avrebbero"]},
-        {inf:"Fare", eng:"do", eng_p:"did", group:"ir", type:"ir", presente:["faccio","fai","fa","facciamo","fate","fanno"], passato_prossimo:["ho fatto","hai fatto","ha fatto","abbiamo fatto","avete fatto","hanno fatto"], imperfetto:["facevo","facevi","faceva","facevamo","facevate","facevano"], futuro:["farò","farai","farà","faremo","farete","faranno"], condizionale:["farei","faresti","farebbe","faremmo","fareste","farebbero"]},
-        {inf:"Volere", eng:"want", eng_p:"wanted", group:"ir", type:"ir", presente:["voglio","vuoi","vuole","vogliamo","volete","vogliono"], passato_prossimo:["ho voluto","hai voluto","ha voluto","abbiamo voluto","avete voluto","hanno voluto"], imperfetto:["volevo","volevi","voleva","volevamo","volevate","volevano"], futuro:["vorrò","vorrai","vorrà","vorremo","vorrete","vorranno"], condizionale:["vorrei","vorresti","vorrebbe","vorremmo","vorreste","vorrebbero"]},
+        {inf:"Avere", eng:"have", eng_p:"had", group:"ir", type: "ir", presente:["ho","hai","ha","abbiamo","avete","hanno"], passato_prossimo:["ho avuto","hai avuto","ha avuto","abbiamo avuto","avete avuto","hanno avuto"], imperfetto:["avevo","avevi","aveva","avevamo","avevate","avevano"], futuro:["avrò","avrai","avrà","avremo","avrete","avranno"], condizionale:["avrei","avresti","avrebbe","avremmo","avreste","avrebbero"]},
+        {inf:"Fare", eng:"do", eng_p:"did", group:"ir", type: "ir", presente:["faccio","fai","fa","facciamo","fate","fanno"], passato_prossimo:["ho fatto","hai fatto","ha fatto","abbiamo fatto","avete fatto","hanno fatto"], imperfetto:["facevo","facevi","faceva","facevamo","facevate","facevano"], futuro:["farò","farai","farà","faremo","farete","faranno"], condizionale:["farei","faresti","farebbe","faremmo","fareste","farebbero"]},
+        {inf:"Volere", eng:"want", eng_p:"wanted", group:"ir", type: "ir", presente:["voglio","vuoi","vuole","vogliamo","volete","vogliono"], passato_prossimo:["ho voluto","hai voluto","ha voluto","abbiamo voluto","avete voluto","hanno voluto"], imperfetto:["volevo","volevi","voleva","volevamo","volevate","volevano"], futuro:["vorrò","vorrai","vorrà","vorremo","vorrete","vorranno"], condizionale:["vorrei","vorresti","vorrebbe","vorremmo","vorreste","vorrebbero"]},
         {inf:"Dovere", eng: "must", eng_p: "had to", group: "ir", type: "ir", presente: ["devo", "devi", "deve", "dobbiamo", "dovete", "devono"], passato_prossimo: ["ho dovuto", "hai dovuto", "ha dovuto", "abbiamo dovuto", "avete dovuto", "hanno dovuto"], imperfetto: ["dovevo", "dovevi", "doveva", "dovevamo", "dovevate", "dovevano"], futuro: ["dovrò", "dovrai", "dovrà", "dovremo", "dovrete", "dovranno"], condizionale: ["dovrei", "dovresti", "dovrebbe", "dovremmo", "dovreste", "dovrebbero"]},
         {inf:"Piacere", eng: "like", eng_p: "liked", group: "ir", type: "ir", presente: ["piaccio", "piaci", "piace", "piacciamo", "piacete", "piacciono"], passato_prossimo: ["sono piaciuto", "sei piaciuto", "è piaciuto", "siamo piaciuti", "siete piaciuti", "sono piaciuti"], imperfetto: ["piacevo", "piacevi", "piaceva", "piacevamo", "piacevate", "piacevano"], futuro: ["piacerò", "piacerai", "piacerà", "piaceremo", "piacerete", "piaceranno"], condizionale: ["piacerei", "piaceresti", "piacerebbe", "piaceremmo", "piacereste", "piacerebbero"]}
     ];
@@ -156,7 +159,7 @@
         document.getElementById('mLabel').innerText = '"' + hint + '"';
         inputEl.value = ""; inputEl.readOnly = false; inputEl.style.background = "white";
         document.getElementById('feedback').innerText = ""; document.getElementById('mainBtn').innerText = "Verifica";
-        setTimeout(forceFocus, 50);
+        setTimeout(forceFocus, 100);
     }
 
     function doAction() {
@@ -180,6 +183,13 @@
         var v = verbs[document.getElementById('vSelect').value], h = "";
         for(var i=0; i<6; i++) { h += "<tr><td><b>" + pro[i].it + "</b></td>" + "<td>" + getConj(v,i,'presente') + "</td>" + "<td>" + getConj(v,i,'passato_prossimo') + "</td>" + "<td>" + getConj(v,i,'imperfetto') + "</td></tr>"; }
         document.getElementById('rt').innerHTML = h;
+    }
+
+    function addAcc(c) {
+        if(!wait) { 
+            inputEl.value += c; 
+            inputEl.focus(); 
+        }
     }
 
     var vs = document.getElementById('vSelect');
