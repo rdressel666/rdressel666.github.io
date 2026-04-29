@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Italian Master v9.7</title>
+    <title>Italian Master v9.8</title>
     <style>
         html, body { 
             margin: 0; padding: 0; min-height: 100%; 
@@ -84,8 +84,8 @@
     </div>
 
     <div id="refBox" style="display:none;">
-        <select id="vSelect" onchange="updateTable()" style="width:100%; padding:10px; border-radius: 8px;"></select>
-        <div style="overflow-y:auto; margin-top:10px; max-height: 300px;">
+        <select id="vSelect" onchange="updateTable()" style="width:100%; padding:10px; border-radius: 8px; font-size: 1rem;"></select>
+        <div style="overflow-y:auto; margin-top:10px; max-height: 350px;">
             <table style="width:100%; border-collapse:collapse; font-size:0.9rem; text-align:left;">
                 <thead><tr style="background:#eee;"><th>Sogg.</th><th>Pres</th><th>Pass.Pro</th><th>Imp</th></tr></thead>
                 <tbody id="rt"></tbody>
@@ -95,7 +95,7 @@
 </div>
 
 <script>
-    var verbs = [
+    var rawVerbs = [
         {inf:"Parlare", stem:"parl", p_part:"parlato", eng:"speak", eng_p:"spoke", group:"are", type:"reg"},
         {inf:"Vendere", stem:"vend", p_part:"venduto", eng:"sell", eng_p:"sold", group:"ere", type:"reg"},
         {inf:"Partire", stem:"part", p_part:"partito", eng:"leave", eng_p:"left", group:"ire", type:"reg"},
@@ -107,6 +107,7 @@
         {inf:"Pagare", stem:"pag", p_part:"pagato", eng:"pay", eng_p:"paid", group:"are", type:"reg_h"},
         {inf:"Spiegare", stem:"spieg", p_part:"spiegato", eng:"explain", eng_p:"explained", group:"are", type:"reg_h"},
         {inf:"Mangiare", stem:"mangi", p_part:"mangiato", eng:"eat", eng_p:"ate", group:"are", type:"reg"},
+        {inf:"Passeggiare", stem:"passeggi", p_part:"passeggiato", eng:"stroll", eng_p:"strolled", group:"are", type:"reg"},
         {inf:"Viaggiare", stem:"viaggi", p_part:"viaggiato", eng:"travel", eng_p:"traveled", group:"are", type:"reg"},
         {inf:"Leggere", stem:"legg", p_part:"letto", eng:"read", eng_p:"read", group:"ere", type:"reg"},
         {inf:"Prendere", stem:"prend", p_part:"preso", eng:"take", eng_p:"took", group:"ere", type:"reg"},
@@ -118,8 +119,17 @@
         {inf:"Fare", eng:"do", eng_p:"did", group: "ir", type: "ir", presente:["faccio","fai","fa","facciamo","fate","fanno"], passato_prossimo:["ho fatto","hai fatto","ha fatto","abbiamo fatto","avete fatto","hanno fatto"], imperfetto:["facevo","facevi","faceva","facevamo","facevate","facevano"], futuro:["farò","farai","farà","faremo","farete","faranno"], condizionale:["farei","faresti","farebbe","faremmo","fareste","farebbero"]},
         {inf:"Volere", eng:"want", eng_p:"wanted", group: "ir", type: "ir", presente:["voglio","vuoi","vuole","vogliamo","volete","vogliono"], passato_prossimo:["ho voluto","hai voluto","ha voluto","abbiamo voluto","avete voluto","hanno voluto"], imperfetto:["volevo","volevi","voleva","volevamo","volevate","volevano"], futuro:["vorrò","vorrai","vorrà","vorremo","vorrete","vorranno"], condizionale:["vorrei","vorresti","vorrebbe","vorremmo","vorreste","vorrebbero"]},
         {inf:"Dovere", eng: "must", eng_p: "had to", group: "ir", type: "ir", presente: ["devo", "devi", "deve", "dobbiamo", "dovete", "devono"], passato_prossimo: ["ho dovuto", "hai dovuto", "ha dovuto", "abbiamo dovuto", "avete dovuto", "hanno dovuto"], imperfetto: ["dovevo", "dovevi", "doveva", "dovevamo", "dovevate", "dovevano"], futuro: ["dovrò", "dovrai", "dovrà", "dovremo", "dovrete", "dovranno"], condizionale: ["dovrei", "dovresti", "dovrebbe", "dovremmo", "dovreste", "dovrebbero"]},
-        {inf:"Piacere", eng: "like", eng_p: "liked", group: "ir", type: "ir", presente: ["piaccio", "piaci", "piace", "piacciamo", "piacete", "piacciono"], passato_prossimo: ["sono piaciuto", "sei piaciuto", "è piaciuto", "siamo piaciuti", "siete piaciuti", "sono piaciuti"], imperfetto: ["piacevo", "piacevi", "piaceva", "piacevamo", "piacevate", "piacevano"], futuro: ["piacerò", "piacerai", "piacerà", "piaceremo", "piacerete", "piaceranno"], condizionale: ["piacerei", "piaceresti", "piacerebbe", "piaceremmo", "piacereste", "piacerebbero"]}
+        {inf:"Piacere", eng: "like", eng_p: "liked", group: "ir", type: "ir", presente: ["piaccio", "piaci", "piace", "piacciamo", "piacete", "piacciono"], passato_prossimo: ["sono piaciuto", "sei piaciuto", "è piaciuto", "siamo piaciuti", "siete piaciuti", "sono piaciuti"], imperfetto: ["piacevo", "piacevi", "piaceva", "piacevamo", "piacevate", "piacevano"], futuro: ["piacerò", "piacerai", "piacerà", "piaceremo", "piacerete", "piaceranno"], condizionale: ["piacerei", "piaceresti", "piacerebbe", "piaceremmo", "piacereste", "piacerebbero"]},
+        {inf:"Potere", eng: "be able to", eng_p: "could", group: "ir", type: "ir", presente: ["posso", "puoi", "può", "possiamo", "potete", "possono"], passato_prossimo: ["ho potuto", "hai potuto", "ha potuto", "abbiamo potuto", "avete potuto", "hanno potuto"], imperfetto: ["potevo", "potevi", "poteva", "potevamo", "potevate", "potevano"], futuro: ["potrò", "potrai", "potrà", "potremo", "potrete", "potranno"], condizionale: ["potrei", "potresti", "potrebbe", "potremmo", "potreste", "potrebbero"]},
+        {inf:"Uscire", eng: "go out", eng_p: "went out", group: "ir", type: "ir", presente: ["esco", "esci", "esce", "usciamo", "uscite", "escono"], passato_prossimo: ["sono uscito", "sei uscito", "è uscito", "siamo usciti", "siete usciti", "sono usciti"], imperfetto: ["uscivo", "uscivi", "usciva", "uscivamo", "uscivate", "uscivano"], futuro: ["uscirò", "uscirai", "uscirà", "usciremo", "uscirete", "usciranno"], condizionale: ["uscirei", "usciresti", "uscirebbe", "usciremmo", "uscireste", "uscirebbero"]}
     ];
+
+    // Alphabetical Sorting
+    var verbs = rawVerbs.sort(function(a, b){
+        if(a.inf < b.inf) return -1;
+        if(a.inf > b.inf) return 1;
+        return 0;
+    });
 
     var aux_avere = ["ho", "hai", "ha", "abbiamo", "avete", "hanno"];
     var pro = [{it:"Io",en:"I",r:"mi"},{it:"Tu",en:"You",r:"ti"},{it:"Lui/Lei",en:"He/She",r:"si"},{it:"Noi",en:"We",r:"ci"},{it:"Voi",en:"You (pl)",r:"vi"},{it:"Loro",en:"They",r:"si"}];
@@ -158,8 +168,6 @@
         document.getElementById('mLabel').innerText = '"' + hint + '"';
         inputEl.value = ""; inputEl.readOnly = false; inputEl.style.background = "white";
         document.getElementById('feedback').innerText = ""; document.getElementById('mainBtn').innerText = "Verifica";
-        
-        // The Fix: Force the keyboard back up after the DOM update
         setTimeout(forceFocus, 50);
     }
 
@@ -167,7 +175,7 @@
         if (wait) { resetTask(); return; }
         var inp = inputEl.value.toLowerCase().trim();
         if (inp === task.ans) {
-            document.getElementById('feedback').innerHTML = "<span style='color:green'>Ottimo!</span>";
+            document.getElementById('feedback').innerHTML = "<span style='color:green'>Ottimo! ✅</span>";
             setTimeout(resetTask, 500);
         } else {
             document.getElementById('feedback').innerHTML = "No: <b style='color:#d32f2f'>" + task.ans + "</b>";
@@ -186,15 +194,13 @@
         document.getElementById('rt').innerHTML = h;
     }
 
-    function addAcc(c) {
-        if(!wait) { 
-            inputEl.value += c; 
-            inputEl.focus(); 
-        }
-    }
-
     var vs = document.getElementById('vSelect');
-    for(var i=0; i<verbs.length; i++) { var o = document.createElement('option'); o.value = i; o.innerText = cleanInf(verbs[i]); vs.appendChild(o); }
+    for(var i=0; i<verbs.length; i++) { 
+        var o = document.createElement('option'); 
+        o.value = i; 
+        o.innerText = cleanInf(verbs[i]) + " (" + verbs[i].eng + ")"; 
+        vs.appendChild(o); 
+    }
     document.addEventListener('keydown', function(e) { if(e.keyCode === 13) doAction(); });
     resetTask();
 </script>
