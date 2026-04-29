@@ -3,90 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Italian Master v8.6</title>
+    <title>Italian Master v8.9</title>
     <style>
-        /* Force the app to fill the screen and stay at the top */
         html, body { height: 100%; margin: 0; padding: 0; background: #f0f2f5; overflow: hidden; }
         body { font-family: -apple-system, sans-serif; display: flex; flex-direction: column; align-items: center; }
-        
-        .card { 
-            background: white; 
-            width: 100%; 
-            max-width: 600px; 
-            height: 100%; /* Fill the whole screen */
-            display: flex;
-            flex-direction: column;
-            padding: 10px;
-            box-sizing: border-box;
-        }
+        .card { background: white; width: 100%; max-width: 600px; height: 100%; display: flex; flex-direction: column; padding: 5px 10px; box-sizing: border-box; }
 
-        /* Drill Area - Tightly packed */
-        #drillBox { flex-grow: 1; display: flex; flex-direction: column; }
+        /* THE COMPACT HEADER */
+        .header-box { display: flex; align-items: baseline; justify-content: center; gap: 10px; margin: 0; }
+        #pLabel { color: #d32f2f; font-size: 1.1rem; font-weight: bold; text-transform: uppercase; }
+        h1 { margin: 0; font-size: 2.3rem; line-height: 1; color: #1a1a1a; }
+        #mLabel { color: #2e7d32; font-weight: bold; font-size: 1.1rem; font-style: italic; margin: 2px 0; }
         
-        h1 { margin: 0; font-size: 3rem; line-height: 1; color: #1a1a1a; }
-        #pLabel { color: #666; font-size: 1.2rem; margin-bottom: 2px; }
-        #mLabel { color: #2e7d32; font-weight: bold; font-size: 1.4rem; font-style: italic; margin: 0; }
-        
-        /* Larger Input for better touch targets */
-        input { 
-            width: 100%; 
-            padding: 15px; 
-            margin: 10px 0; 
-            border: 3px solid #ddd; 
-            border-radius: 12px; 
-            font-size: 1.8rem; /* Big text for phone */
-            text-align: center; 
-            outline: none; 
-            box-sizing: border-box;
-            -webkit-appearance: none;
-        }
-        
-        .btn-main { 
-            width: 100%; 
-            padding: 20px; 
-            background: #2e7d32; 
-            color: white; 
-            border: none; 
-            border-radius: 12px; 
-            font-size: 1.5rem; 
-            font-weight: bold; 
-            cursor: pointer;
-        }
-
-        .accent-bar { display: flex; justify-content: center; gap: 8px; margin: 10px 0; }
-        .accent-btn { padding: 12px; border: 1px solid #ccc; border-radius: 8px; background: white; font-size: 1.5rem; min-width: 50px; }
-
-        .feedback { font-weight: bold; min-height: 40px; font-size: 1.2rem; margin: 5px 0; display: flex; align-items: center; justify-content: center; }
-        
-        .tab-bar { display: flex; justify-content: center; margin-bottom: 10px; gap: 10px; }
-        .tab-btn { padding: 10px 20px; border: none; background: #ccc; border-radius: 8px; font-weight: bold; }
+        input { width: 100%; padding: 12px; margin: 5px 0; border: 3px solid #ddd; border-radius: 10px; font-size: 1.6rem; text-align: center; outline: none; box-sizing: border-box; -webkit-appearance: none; }
+        .btn-main { width: 100%; padding: 14px; background: #2e7d32; color: white; border: none; border-radius: 10px; font-size: 1.3rem; font-weight: bold; }
+        .accent-bar { display: flex; justify-content: center; gap: 4px; margin: 4px 0; }
+        .accent-btn { padding: 8px; border: 1px solid #ccc; border-radius: 8px; background: white; font-size: 1.3rem; min-width: 42px; }
+        .feedback { font-weight: bold; min-height: 25px; font-size: 1rem; margin: 2px 0; display: flex; align-items: center; justify-content: center; }
+        .top-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
+        .tab-btn { padding: 6px 10px; border: none; background: #ccc; border-radius: 6px; font-weight: bold; font-size: 0.85rem; }
         .active-tab { background: #2e7d32; color: white; }
     </style>
 </head>
 <body onclick="forceFocus()">
-
 <div class="card">
-    <div class="tab-bar">
-        <button id="t1" class="tab-btn active-tab" onclick="showDrill()">Drill</button>
-        <button id="t2" class="tab-btn" onclick="showRef()">List</button>
+    <div class="top-row">
+        <div>
+            <button id="t1" class="tab-btn active-tab" onclick="showDrill()">Drill</button>
+            <button id="t2" class="tab-btn" onclick="showRef()">List</button>
+        </div>
+        <select id="tenseSelect" onchange="resetTask()" style="padding:4px; font-size: 0.85rem; border-radius: 6px;">
+            <option value="presente">Pres</option>
+            <option value="passato_prossimo">Pass.Pro</option>
+            <option value="imperfetto">Imp</option>
+            <option value="futuro">Fut</option>
+            <option value="condizionale">Cond</option>
+        </select>
     </div>
 
     <div id="drillBox">
-        <select id="tenseSelect" onchange="resetTask()" style="width:100%; padding:10px; font-size: 1.1rem; border-radius: 8px; margin-bottom: 10px;">
-            <option value="presente">Presente</option>
-            <option value="passato_prossimo">Passato Prossimo</option>
-            <option value="imperfetto">Imperfetto</option>
-            <option value="futuro">Futuro</option>
-            <option value="condizionale">Condizionale</option>
-        </select>
-        
-        <div id="pLabel">...</div>
-        <h1 id="vLabel">---</h1>
+        <div class="header-box">
+            <div id="pLabel">...</div>
+            <h1 id="vLabel">---</h1>
+        </div>
         <div id="mLabel">---</div>
-
         <div id="feedback" class="feedback"></div>
-        <input type="text" id="userInput" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Tocca per scrivere">
-        
+        <input type="text" id="userInput" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Scrivi...">
         <div class="accent-bar">
             <button class="accent-btn" onclick="addAcc('à')">à</button>
             <button class="accent-btn" onclick="addAcc('è')">è</button>
@@ -95,19 +57,16 @@
             <button class="accent-btn" onclick="addAcc('ò')">ò</button>
             <button class="accent-btn" onclick="addAcc('ù')">ù</button>
         </div>
-
         <button class="btn-main" id="mainBtn" onclick="doAction()">Verifica</button>
-        <button onclick="resetTask()" style="background:none; border:none; color:#999; margin-top:15px; text-decoration:underline;">Skip Verb</button>
+        <button onclick="resetTask()" style="background:none; border:none; color:#999; margin-top:5px; text-decoration:underline; font-size: 0.75rem;">Skip</button>
     </div>
 
     <div id="refBox" style="display:none;">
-        <select id="vSelect" onchange="updateTable()" style="width:100%; padding:10px; border-radius: 8px;"></select>
-        <div style="overflow-y:auto; margin-top:10px;">
-            <table style="width:100%; border-collapse:collapse; font-size:0.9rem; text-align:left;">
-                <thead><tr style="background:#eee;"><th>Sogg.</th><th>Pres</th><th>Pass.Pro</th><th>Imp</th></tr></thead>
-                <tbody id="rt"></tbody>
-            </table>
-        </div>
+        <select id="vSelect" onchange="updateTable()" style="width:100%; padding:8px; border-radius: 8px;"></select>
+        <div style="overflow-y:auto; margin-top:5px;"><table style="width:100%; border-collapse:collapse; font-size:0.8rem; text-align:left;">
+            <thead><tr style="background:#eee;"><th>Sogg.</th><th>Pres</th><th>Pass.Pro</th><th>Imp</th></tr></thead>
+            <tbody id="rt"></tbody>
+        </table></div>
     </div>
 </div>
 
@@ -121,36 +80,7 @@
         {inf: "Cercare", stem: "cerc", p_part: "cercato", eng: "look for", eng_p: "looked for", group: "are", type: "reg_h"},
         {inf: "Pagare", stem: "pag", p_part: "pagato", eng: "pay", eng_p: "paid", group: "are", type: "reg_h"},
         {inf: "Mangiare", stem: "mangi", p_part: "mangiato", eng: "eat", eng_p: "ate", group: "are", type: "reg"},
-        {inf: "Bere", eng: "drink", eng_p: "drank", group: "ir", type: "ir",
-            presente: ["bevo", "bevi", "beve", "beviamo", "bevete", "bevono"],
-            passato_prossimo: ["ho bevuto", "hai bevuto", "ha bevuto", "abbiamo bevuto", "avete bevuto", "hanno bevuto"],
-            imperfetto: ["bevevo", "bevevi", "beveva", "bevevamo", "bevevate", "bevevano"],
-            futuro: ["berrò", "berrai", "berrà", "berremo", "berrete", "berranno"],
-            condizionale: ["berrei", "berresti", "berrebbe", "berremmo", "berreste", "berrebbero"]},
-        {inf: "Andare", eng: "go", eng_p: "went", group: "ir", type: "ir", 
-            presente: ["vado", "vai", "va", "andiamo", "andate", "vanno"],
-            passato_prossimo: ["sono andato", "sei andato", "è andato", "siamo andati", "siete andati", "sono andati"],
-            imperfetto: ["andavo", "andavi", "andava", "andavamo", "andavate", "andavano"],
-            futuro: ["andrò", "andrai", "andrà", "andremo", "andrete", "andranno"],
-            condizionale: ["andrei", "andresti", "andrebbe", "andremmo", "andreste", "andrebbero"]},
-        {inf: "Essere", eng: "be", eng_p: "was", group: "ir", type: "ir", 
-            presente: ["sono", "sei", "è", "siamo", "siete", "sono"],
-            passato_prossimo: ["sono stato", "sei stato", "è stato", "siamo stati", "siete stati", "sono stati"],
-            imperfetto: ["ero", "eri", "era", "eravamo", "eravate", "erano"],
-            futuro: ["sarò", "sarai", "sarà", "saremo", "sarete", "saranno"],
-            condizionale: ["sarei", "saresti", "sarebbe", "saremmo", "sareste", "sarebbero"]},
-        {inf: "Avere", eng: "have", eng_p: "had", group: "ir", type: "ir",
-            presente: ["ho", "hai", "ha", "abbiamo", "avete", "hanno"],
-            passato_prossimo: ["ho avuto", "hai avuto", "ha avuto", "abbiamo avuto", "avete avuto", "hanno avuto"],
-            imperfetto: ["avevo", "avevi", "aveva", "avevamo", "avevate", "avevano"],
-            futuro: ["avrò", "avrai", "avrà", "avremo", "avrete", "avranno"],
-            condizionale: ["avrei", "avresti", "avrebbe", "avremmo", "avreste", "avrebbero"]},
-        {inf: "Fare", eng: "do", eng_p: "did", group: "ir", type: "ir", 
-            presente: ["faccio", "fai", "fa", "facciamo", "fate", "fanno"],
-            passato_prossimo: ["ho fatto", "hai fatto", "ha fatto", "abbiamo fatto", "avete fatto", "hanno fatto"],
-            imperfetto: ["facevo", "facevi", "faceva", "facevamo", "facevate", "facevano"],
-            futuro: ["farò", "farai", "farà", "faremo", "farete", "faranno"],
-            condizionale: ["farei", "faresti", "farebbe", "faremmo", "fareste", "farebbero"]}
+        {inf: "Andare", eng: "go", eng_p: "went", group: "ir", type: "ir", presente: ["vado", "vai", "va", "andiamo", "andate", "vanno"], passato_prossimo: ["sono andato", "sei andato", "è andato", "siamo andati", "siete andati", "sono andati"], imperfetto: ["andavo", "andavi", "andava", "andavamo", "andavate", "andavano"], futuro: ["andrò", "andrai", "andrà", "andremo", "andrete", "andranno"], condizionale: ["andrei", "andresti", "andrebbe", "andremmo", "andreste", "andrebbero"]}
     ];
 
     var aux_avere = ["ho", "hai", "ha", "abbiamo", "avete", "hanno"];
@@ -166,21 +96,16 @@
     var inputEl = document.getElementById('userInput');
 
     function forceFocus() { if(!wait) inputEl.focus(); }
-
     function cleanInf(v) { return (v.type === "refl") ? v.inf.substring(0, v.inf.length - 2) + "e" : v.inf; }
 
     function getConj(v, pi, tn) {
         if (v.type === "ir") return v[tn][pi];
-        if (tn === 'passato_prossimo') {
-            var res = aux_avere[pi] + " " + (v.p_part || "");
-            return (v.type === "refl") ? pro[pi].r + " " + res : res;
-        }
+        if (tn === 'passato_prossimo') return (v.type === "refl" ? pro[pi].r + " " : "") + aux_avere[pi] + " " + (v.p_part || "");
         var s = v.stem, gt = (tn === 'presente' && v.type === 'isc') ? 'isc' : v.group, suffix = suf[tn][gt][pi];
         var needsH = (v.type === "reg_h" && ((tn === 'presente' && (pi === 1 || pi === 3)) || tn === 'futuro' || tn === 'condizionale'));
         if (s.charAt(s.length - 1) === 'i' && suffix.charAt(0) === 'i') s = s.substring(0, s.length - 1);
         if (needsH) s += "h";
-        var word = s + suffix;
-        return (v.type === "refl") ? pro[pi].r + " " + word : word;
+        return (v.type === "refl" ? pro[pi].r + " " : "") + s + suffix;
     }
 
     function resetTask() {
@@ -189,7 +114,7 @@
         var v = verbs[Math.floor(Math.random() * verbs.length)];
         var pi = Math.floor(Math.random() * 6);
         task = { ans: getConj(v, pi, tn).toLowerCase() };
-        document.getElementById('pLabel').innerText = pro[pi].it + " (" + pro[pi].en + ")";
+        document.getElementById('pLabel').innerText = pro[pi].it;
         document.getElementById('vLabel').innerText = cleanInf(v);
         var hint = pro[pi].en + " " + ((tn === 'presente') ? v.eng : (tn === 'passato_prossimo' ? (v.eng_p||"") : (tn === 'imperfetto' ? "used to "+v.eng : (tn === 'futuro' ? "will "+v.eng : "would "+v.eng))));
         document.getElementById('mLabel').innerText = '"' + hint + '"';
@@ -202,7 +127,7 @@
         if (wait) { resetTask(); return; }
         var inp = inputEl.value.toLowerCase().trim();
         if (inp === task.ans) {
-            document.getElementById('feedback').innerHTML = "<span style='color:green'>Ottimo! ✅</span>";
+            document.getElementById('feedback').innerHTML = "<span style='color:green'>Ottimo!</span>";
             setTimeout(resetTask, 500);
         } else {
             document.getElementById('feedback').innerHTML = "No: <b style='color:#d32f2f'>" + task.ans + "</b>";
@@ -226,6 +151,5 @@
     document.addEventListener('keydown', function(e) { if(e.keyCode === 13) doAction(); });
     resetTask();
 </script>
-
 </body>
 </html>
